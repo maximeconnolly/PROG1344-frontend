@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { loginUser } from "../store/authSlice";
-import { notification, Form, Input, Button, Card, Typography, message} from "antd";
+import { notification, Form, Input, Button, Card, Typography} from "antd";
 
 const { Title } = Typography;
 
@@ -30,6 +30,11 @@ const Login = () => {
     
     const submitForm = () => {
         dispatch(loginUser({ username, password }));
+        if( status === "rejected" ) {
+
+            loginErrorNotification();
+            form.resetFields();
+        }
         // const user = {
       //   Admin: "Admin",
       //   SuperUser: "SuperUser",
