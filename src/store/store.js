@@ -4,7 +4,8 @@ import authReducer from "./authSlice";
 import dashboardReducer from "./dashboardSlice";
 import gamesReducer from "./gamesSlice";
 import rentalsReducer from "./rentalSlice";
-import salesReducer from "./salesSlice"
+import salesReducer from "./salesSlice";
+import userReducer from "./userSlice";
 
 // Configure all store
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
         dashboard: dashboardReducer,
         games: gamesReducer,
         rentals: rentalsReducer,
-        sales: salesReducer
+        sales: salesReducer,
+        user: userReducer,
     }
 })

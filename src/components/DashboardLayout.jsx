@@ -2,7 +2,6 @@
  * Contient la barre menu sur le coter
  */
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 
 import { Layout, Menu} from "antd";
 import {
@@ -33,7 +32,6 @@ const Dashboard = () => {
 
   let isAdmin = false;
   let isSuperUser = false;
-
   // if(authenticatedUser === 'Admin'){
   //   isAdmin = true;
   // } else if (authenticatedUser === 'SuperUser'){
