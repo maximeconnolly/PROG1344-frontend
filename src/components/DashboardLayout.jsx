@@ -3,12 +3,15 @@
  */
 import React, { useState } from "react";
 
+import {useDispatch} from "react-redux";
+
 import { Layout, Menu} from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   HomeOutlined,
-  SettingOutlined
+  SettingOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -20,6 +23,7 @@ import GameList from "./GameList";
 import RentalList from "./RentalList";
 import SettingList from "./SettingList"
 import SaleList from "./SaleList";
+import {logout} from "../store/authSlice.js";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -27,6 +31,9 @@ const {Header, Content, Footer, Sider} = Layout;
 
 const Dashboard = () => {
   // const authenticatedUser = useSelector((state) => state.auth.user.username)
+  const dispatch = useDispatch();
+
+
   const [collapsed, setCollapsed] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -56,6 +63,8 @@ const Dashboard = () => {
 
   } else if (selectedItem === '5') {
     content = <SettingList />;
+  }else if (selectedItem === '6'){
+    dispatch(logout());
   };
 
   
@@ -88,7 +97,9 @@ const Dashboard = () => {
           <Menu.Item key="5" icon={<SettingOutlined />}>
             Settings
           </Menu.Item>): <></>};
-
+          <Menu.Item key="6" icon={<LogoutOutlined />}>
+            Logout
+          </Menu.Item>
         </Menu>
       </Sider>
 

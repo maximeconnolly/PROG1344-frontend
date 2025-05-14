@@ -12,7 +12,6 @@ import {
 
 import {useDispatch, useSelector} from "react-redux";
 
-import { logout} from "../store/authSlice.js";
 import {getUser} from "../store/userSlice.js";
 
 const DashboardContent = () => {
@@ -28,7 +27,6 @@ const DashboardContent = () => {
     return(
         <>
             <h3>Welcome {user}!</h3>
-            <button onClick={() => dispatch(logout())}>Logout</button>
             <Row gutter={[16, 16]}>
                 <Col xs={26} sm={14} md={10} lg={8}>
                     <Card title="Sales" style={{textAlign: "center"}}>
