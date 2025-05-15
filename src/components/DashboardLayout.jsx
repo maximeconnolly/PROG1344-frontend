@@ -1,9 +1,9 @@
 /**
  * Contient la barre menu sur le coter
  */
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import { Layout, Menu} from "antd";
 import {
@@ -24,6 +24,7 @@ import RentalList from "./RentalList";
 import SettingList from "./SettingList"
 import SaleList from "./SaleList";
 import {logout} from "../store/authSlice.js";
+import {getUser} from "../store/userSlice.js";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -36,9 +37,24 @@ const Dashboard = () => {
 
   const [collapsed, setCollapsed] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const user = useSelector((state) => state.user);
 
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+  console.log(user);
   let isAdmin = false;
   let isSuperUser = false;
+
+  if (user.group.includes('admin')) {
+    isAdmin = true;
+  }
+
+  if (user.group.includes('superuser')) {
+    isSuperUser = true;
+  }
+
+
   // if(authenticatedUser === 'Admin'){
   //   isAdmin = true;
   // } else if (authenticatedUser === 'SuperUser'){
