@@ -65,9 +65,9 @@ const SaleList = () => {
         setIsGameSaleUpdateModalVisible(true);
     }
 
-    const showGameDeleteSaleModal = () => {
-        setIsGameSaleDeleteModalVisible(true);
-    }
+    // const showGameDeleteSaleModal = () => {
+    //     setIsGameSaleDeleteModalVisible(true);
+    // }
 
     const handleCancelAddSaleModal = () => {
         setIsGameSaleAddModalVisible(false);
