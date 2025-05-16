@@ -1,7 +1,7 @@
 /**
  * Page principale de l'application le dashboard
  */
-import React, {useEffect} from "react";
+import React from "react";
 import {Card, Row, Col } from "antd";
 
 import {
@@ -10,23 +10,19 @@ import {
     ShoppingCartOutlined
 } from "@ant-design/icons";
 
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
-import {getUser} from "../store/userSlice.js";
 
-const DashboardContent = () => {
-   // const user = useSelector((state) => state.auth.user.username);
+
+const DashboardContent = (props) => {
     const stats = useSelector((state) => state.dashboard.stats);
-    const dispatch = useDispatch();
-    const { user, status, error} = useSelector((state) => state.user);
 
-    useEffect(() => {
-        dispatch(getUser());
-    }, [dispatch]);
+
+
 
     return(
         <>
-            <h3>Welcome {user}!</h3>
+            <h3>Welcome {props.user.user}!</h3>
             <Row gutter={[16, 16]}>
                 <Col xs={26} sm={14} md={10} lg={8}>
                     <Card title="Sales" style={{textAlign: "center"}}>

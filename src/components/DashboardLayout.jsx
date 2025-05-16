@@ -69,7 +69,7 @@ const Dashboard = () => {
   let content;
   // Switch case pour change la page
   if (selectedItem === null || selectedItem === '1'){
-    content = <DashboardContent />;
+    content = <DashboardContent user={user} />;
   } else if (selectedItem === '2') {
     content = <GameList />;
   } else if (selectedItem === '3') {
