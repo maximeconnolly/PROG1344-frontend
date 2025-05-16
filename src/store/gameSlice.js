@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const gamesSlice = createSlice({
+const gameSlice = createSlice({
     name: "games",
     initialState: {
         games: [
@@ -62,5 +62,5 @@ const gamesSlice = createSlice({
     },
 });
 
-export const {addGames, updateGames, deleteGames} = gamesSlice.actions;
-export default gamesSlice.reducer;
+export const {addGames, updateGames, deleteGames} = gameSlice.actions;
+export default gameSlice.reducer;

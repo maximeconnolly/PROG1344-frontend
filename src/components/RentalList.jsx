@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import{ Button, Form, Table, Modal, Input} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import {addRentals, deleteRentals, updateRentals} from '../store/rentalSlice';
+import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
 
-const RentalList = () => {
+const RentalList = (props) => {
 
     const dispatch = useDispatch();
     const rentals = useSelector((state) => state.rentals.rentals)
@@ -15,18 +16,8 @@ const RentalList = () => {
     const [addForm] = Form.useForm();
     const [updateForm] = Form.useForm();
 
-    const authenticatedUser = useSelector((state) => state.auth.user.username);
-
-    let isGuest = false;
-    let isAdmin = false;
-  
-    if(authenticatedUser === 'Guest'){
-      isGuest = true;
-    }
-
-    if (authenticatedUser === 'Admin'){
-        isAdmin = true;
-    }
+    let isGuest = isUserGuest(props.user);
+    let isAdmin = isUserAdmin(props.user);
 
 
     const columns = [

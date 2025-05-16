@@ -25,6 +25,7 @@ import SettingList from "./SettingList"
 import SaleList from "./SaleList";
 import {logout} from "../store/authSlice.js";
 import {getUser} from "../store/userSlice.js";
+import {isUserSuperUser, isUserAdmin} from "../utils/authHelper.js";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -42,24 +43,10 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
-  console.log(user);
-  let isAdmin = false;
-  let isSuperUser = false;
-
-  if (user.group.includes('admin')) {
-    isAdmin = true;
-  }
-
-  if (user.group.includes('superuser')) {
-    isSuperUser = true;
-  }
+  let isAdmin = isUserAdmin(user);
+  let isSuperUser = isUserSuperUser(user);
 
 
-  // if(authenticatedUser === 'Admin'){
-  //   isAdmin = true;
-  // } else if (authenticatedUser === 'SuperUser'){
-  //   isSuperUser = true;
-  // }
 
   // Fonction qui s'occupe du click du menu
   const handleMenuClick = (e) => {
@@ -71,9 +58,9 @@ const Dashboard = () => {
   if (selectedItem === null || selectedItem === '1'){
     content = <DashboardContent user={user} />;
   } else if (selectedItem === '2') {
-    content = <GameList />;
+    content = <GameList user={user} />;
   } else if (selectedItem === '3') {
-    content = <RentalList />;
+    content = <RentalList user={user} />;
   } else if (selectedItem === '4'){
     content = <SaleList />;
 

@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./counterSlice";
 import authReducer from "./authSlice";
 import dashboardReducer from "./dashboardSlice";
-import gamesReducer from "./gamesSlice";
+import gameReducer from "./gameSlice.js";
 import rentalsReducer from "./rentalSlice";
 import salesReducer from "./salesSlice";
 import userReducer from "./userSlice";
@@ -13,7 +13,7 @@ export const store = configureStore({
         counter: counterReducer,
         auth: authReducer,
         dashboard: dashboardReducer,
-        games: gamesReducer,
+        games: gameReducer,
         rentals: rentalsReducer,
         sales: salesReducer,
         user: userReducer,

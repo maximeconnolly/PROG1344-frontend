@@ -1,27 +1,20 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table, Modal, Form, Input } from 'antd';
-import { addGames, deleteGames, updateGames } from '../store/gamesSlice';
+import { addGames, deleteGames, updateGames } from '../store/gameSlice.js';
+import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
 
 
-const GameList = () =>{
+const GameList = (props) =>{
 
     const dispatch = useDispatch();
     const [form] = Form.useForm();
     const [updateForm] = Form.useForm();
-    const authenticatedUser = useSelector((state) => state.auth.user.username);
     const games = useSelector((state) => state.games.games);
 
-    let isGuest = false;
-    let isAdmin = false;
-  
-    if(authenticatedUser === 'Guest'){
-      isGuest = true;
-    }
+    let isAdmin = isUserAdmin(props.user)
+    let isGuest = isUserGuest(props.user);
 
-    if (authenticatedUser === 'Admin'){
-        isAdmin = true;
-    }
 
     const onDelete = () => {
         dispatch(deleteGames({
