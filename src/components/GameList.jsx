@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table, Modal, Form, Input } from 'antd';
-import { addGames, deleteGames, updateGames } from '../store/gameSlice.js';
+//import { addGames, deleteGames, updateGames } from '../store/gameSlice.js';
 import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
 
 
@@ -10,27 +10,27 @@ const GameList = (props) =>{
     const dispatch = useDispatch();
     const [form] = Form.useForm();
     const [updateForm] = Form.useForm();
-    const games = useSelector((state) => state.games.games);
+    let games = props.games.games;
 
     let isAdmin = isUserAdmin(props.user)
     let isGuest = isUserGuest(props.user);
 
 
     const onDelete = () => {
-        dispatch(deleteGames({
-            key: selectedId.key
-        }));
+        // dispatch(deleteGames({
+        //     key: selectedId.key
+        // }));
         selectedId = null;
         handleCancelGameDeleteModal();
     }
 
     const onUpdate = (values) => {
-        dispatch(updateGames({
-            key: values.key,
-            name: values.name,
-            platform: values.platform,
-            year: values.year
-        }))
+        // dispatch(updateGames({
+        //     key: values.key,
+        //     name: values.name,
+        //     platform: values.platform,
+        //     year: values.year
+        // }))
         console.log(values.key);
         selectedId = null;
         updateForm.resetFields();
@@ -44,9 +44,9 @@ const GameList = (props) =>{
             key: 'name',
         },
         {
-            title: 'Year',
-            dataIndex: 'year',
-            key: 'year',
+            title: 'Release Date',
+            dataIndex: 'release_date',
+            key: 'release_date',
             filters: [
                 {
                     text:1990,
@@ -115,11 +115,11 @@ const GameList = (props) =>{
         const gamePlatform = values.platform;
         const gameYear = values.year;
 
-        dispatch(addGames({
-            name: gameName,
-            platform: gamePlatform,
-            year: gameYear
-        }));
+        // dispatch(addGames({
+        //     name: gameName,
+        //     platform: gamePlatform,
+        //     year: gameYear
+        // }));
         form.resetFields();
         handleCancelGameAddModal();
     }
@@ -160,6 +160,7 @@ const GameList = (props) =>{
             <Table 
                 columns={columns}
                 dataSource={games}
+                rowKey="id"
                 scroll={{
                     x: 'max-content',
                     y: 55*5
@@ -189,8 +190,8 @@ const GameList = (props) =>{
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label="Year"
-                        name="year"
+                        label="Release Date"
+                        name="release_date"
                         rules={[{ required: true, message: "Enter a year!" }]}
                     >
                         <Input />

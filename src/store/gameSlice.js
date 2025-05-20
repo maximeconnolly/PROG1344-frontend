@@ -1,66 +1,91 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {getGamesAPI, getGameDetailAPI, createGameAPI, updateGameAPI, deleteGameAPI} from "./gameAPI.js";
+
+export const getGames = createAsyncThunk(
+    'games/getGames',
+    async (_, thunkAPI) => {
+        try {
+            return await getGamesAPI();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response?.data || 'Failed to get games');
+        }
+    }
+)
+
+export const getGameDetails = createAsyncThunk(
+    'games/getGameDetails',
+    async (gameID, thunkAPI) => {
+        try{
+            return await getGameDetailAPI(gameID);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response?.data || 'Failed to get game details');
+        }
+    }
+)
+
+export const createGame = createAsyncThunk(
+    'games/addGames',
+    async (data, thunkAPI) => {
+        try {
+            return await createGameAPI(data);
+        } catch (error){
+            return thunkAPI.rejectWithValue(error.response.data || 'Failed to add games');
+        }
+    }
+)
+
+export const updateGame = createAsyncThunk(
+    'games/updateGame',
+    async (game, thunkAPI) => {
+        try {
+            return await updateGameAPI(game);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data || 'Failed to update games');
+        }
+    }
+)
+
+export const deleteGame = createAsyncThunk(
+    'games/deleteGame',
+    async (id, thunkAPI) => {
+        try {
+            return await deleteGameAPI(id);
+        }
+        catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data || 'Failed to delete games');
+        }
+    }
+)
 
 const gameSlice = createSlice({
     name: "games",
     initialState: {
-        games: [
-            {
-                key: 1,
-                name: "Metal Gear Solid",
-                platform: "Playstation",
-                year: "1999"
-            },
-            {
-                key: 2,
-                name: "Paper Mario",
-                platform: "Nintendo 64",
-                year: "1998"
-            },
-            {
-                key: 3,
-                name: "Super Mario World",
-                platform: "Super Nintendo",
-                year: "1991"
-            },
-            {
-                key: 4,
-                name: "Metroid",
-                platform: "Nintendo Entertainement System",
-                year: "1987"
-            },
-            {
-                key: 5,
-                name: "Super Metroid",
-                platform: "Super Nintendo",
-                year: "1994"
-            },
-            {
-                key: 6,
-                name: "Splatoon 3",
-                platform: "Nintendo Switch",
-                year: "2022"
-            }
-        ],
+        games: [],
+        status: 'idle',
+        error: null,
     },
-    reducers:{
-        addGames: (state, action) => {
-            const game = {
-                key: state.games.length + 2,
-                name: action.payload.name,
-                platform: action.payload.platform,
-                year: action.payload.year
+    reducers:{},
+    extraReducers: (builder) => {
+        builder.addCase(getGames.fulfilled, (state, action) => {
+            state.games = action.payload;
+            state.status = 'done';
+        }).addCase(getGames.pending, (state) => {
+            state.status = 'loading';
+        }).addCase(getGames.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.payload;
+        }).addCase(createGame.fulfilled, (state, action) => {
+            state.games.unshift(action.payload);
+        }).addCase(updateGame.fulfilled, (state, action) => {
+            const index = state.games.findIndex(game => game.id === action.payload.id);
+            if (index !== -1) {
+                state.games[index] = action.payload;
             }
-            state.games = [...state.games, game];
-        },
-        updateGames: (state, action) => {
-            state.games = state.games.map(game => game.key === action.payload.key ? action.payload : game);
-
-        },
-        deleteGames: (state, action) => {
-            state.games = state.games.filter(game => game.key !== action.payload.key)
-        }
-    },
+        }).addCase(deleteGame.fulfilled, (state, action) => {
+            state.games = state.games.filter(game => game.id !== action.payload.id);
+        });
+    }
 });
 
-export const {addGames, updateGames, deleteGames} = gameSlice.actions;
+
 export default gameSlice.reducer;

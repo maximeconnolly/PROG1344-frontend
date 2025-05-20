@@ -13,10 +13,10 @@ export const createGameAPI = async (game) => {
     return response.data;
 }
 export const updateGameAPI = async (game) => {
-    const response = await axiosInstance.put(`/game/${game.id}`, game);
+    const response = await axiosInstance.put(`/api/game/${game.id}`, game);
     return response.data;
 }
 export const deleteGameAPI = async (gameID) => {
-    const response = await axiosInstance.delete(`/game/${gameID}`);
+    const response = await axiosInstance.delete(`/api/game/${gameID}`);
     return response.data;
 }

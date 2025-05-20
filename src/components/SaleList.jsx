@@ -8,14 +8,13 @@ const SaleList = () => {
     const dispatch = useDispatch();
     const sales = useSelector((state) => state.sales.sales)
     const [isGameSaleAddModalVisible, setIsGameSaleAddModalVisible] = useState(false);
-    const [isGameSaleUpdateModalVisibile, setIsGameSaleUpdateModalVisible] = useState(false);
-    const [isGameSaleDeleteModalVisibile, setIsGameSaleDeleteModalVisible] = useState(false);
+    const [isGameSaleUpdateModalVisible, setIsGameSaleUpdateModalVisible] = useState(false);
+    const [isGameSaleDeleteModalVisible, setIsGameSaleDeleteModalVisible] = useState(false);
 
     let [selectedId, setSelectedId] = useState(null);
 
     const [addForm] = Form.useForm();
     const [updateForm] = Form.useForm();
-
 
     const columns = [
         {
@@ -183,7 +182,7 @@ const SaleList = () => {
             {/**Delete game modal */}
             <Modal
                 title="Delete a transaction"
-                open={isGameSaleDeleteModalVisibile}
+                open={isGameSaleDeleteModalVisible}
                 onOk={onDelete}
                 onCancel={handleCancelDeleteSaleModal}
                 okText="Yes"
@@ -195,7 +194,7 @@ const SaleList = () => {
             {/**Update game modal */}
             <Modal
                 title="Update a rental"
-                open={isGameSaleUpdateModalVisibile}
+                open={isGameSaleUpdateModalVisible}
                 onCancel={handleCancelUpdateSaleModal}
                 footer={null}
             >

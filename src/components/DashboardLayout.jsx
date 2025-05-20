@@ -26,6 +26,7 @@ import SaleList from "./SaleList";
 import {logout} from "../store/authSlice.js";
 import {getUser} from "../store/userSlice.js";
 import {isUserSuperUser, isUserAdmin} from "../utils/authHelper.js";
+import {getGames} from "../store/gameSlice.js";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -39,10 +40,17 @@ const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const user = useSelector((state) => state.user);
+  const games = useSelector(state => state.games)
 
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getGames());
+  }, [dispatch]);
+
+  console.log(games)
   let isAdmin = isUserAdmin(user);
   let isSuperUser = isUserSuperUser(user);
 
@@ -58,7 +66,7 @@ const Dashboard = () => {
   if (selectedItem === null || selectedItem === '1'){
     content = <DashboardContent user={user} />;
   } else if (selectedItem === '2') {
-    content = <GameList user={user} />;
+    content = <GameList user={user} games={games} />;
   } else if (selectedItem === '3') {
     content = <RentalList user={user} />;
   } else if (selectedItem === '4'){
