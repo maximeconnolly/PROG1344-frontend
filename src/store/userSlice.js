@@ -27,6 +27,7 @@ const userSlice = createSlice({
         builder.addCase(getUser.fulfilled, (state, action) => {
             state.user = action.payload.user;
             state.group = action.payload.group;
+            state.status = 'done';
         }).addCase(getUser.pending, (state, action) => {
             state.status = 'loading';
         }).addCase(getUser.rejected, (state, action) => {
