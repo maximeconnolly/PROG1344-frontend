@@ -84,6 +84,16 @@ const GameList = (props) =>{
             onFilter: (value, record) => record.platform.indexOf(value) === 0,
         },
         {
+          title: 'Detail',
+          key: 'detail',
+          width: 100,
+          render: (record) => {return (<Button type="primary" onClick={() => {
+              setSelectedId(record);
+              console.log(record);
+              showGameDetailModal();
+          }}>Details</Button>)}
+        },
+        {
             title: 'Edit',
             key: 'edit',
             width: 100,
@@ -127,6 +137,7 @@ const GameList = (props) =>{
     const [isGameAddModalVisible, setIsGameAddModalVisible] = useState(false);
     const [isGameDeleteModalVisible, setIsGameDeleteModalVisible] = useState(false);
     const [isGameUpdateModalVisible, setIsGameUpdateVisible] = useState(false);
+    const [isGameDetailModalVisible, setIsGameDetailModalVisible] = useState(false);
 
     let [selectedId, setSelectedId] = useState(null);
 
@@ -136,6 +147,13 @@ const GameList = (props) =>{
 
     const handleCancelGameUpdateModal = () => {
         setIsGameUpdateVisible(false);
+    }
+
+    const showGameDetailModal = () => {
+        setIsGameDetailModalVisible(true);
+    }
+    const handleCancleGameDetailModal = () => {
+        setIsGameDetailModalVisible(false);
     }
 
     const showGameDeleteModal = () =>{
@@ -254,6 +272,13 @@ const GameList = (props) =>{
                         Update Game
                     </Button>
                     </Form>
+            </Modal>
+            {/** Game Detail Modal **/}
+            <Modal
+                open={isGameDetailModalVisible}
+                onCancel={handleCancleGameDetailModal}
+                title={(selectedId ? selectedId.name : null) + " - Details"}
+                footer={null}>
             </Modal>
         </>
 
