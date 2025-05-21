@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Table, Modal, Form, Input } from 'antd';
+import { Button, Table, Modal, Form, Input, List } from 'antd';
 //import { addGames, deleteGames, updateGames } from '../store/gameSlice.js';
 import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
+import {convertRegionEnum, convertConditionEnum, convertStockEnum} from "../utils/enumHelper.js";
 
 
 const GameList = (props) =>{
@@ -279,6 +280,49 @@ const GameList = (props) =>{
                 onCancel={handleCancleGameDetailModal}
                 title={(selectedId ? selectedId.name : null) + " - Details"}
                 footer={null}>
+                    <list
+                        header={null}
+                        footer={null}
+                        bordered={true}
+                    >
+                        <List.Item>
+                            Name: {selectedId ? selectedId.name : null}
+                        </List.Item>
+                        <List.Item>
+                            Condition: {selectedId ? convertConditionEnum(selectedId.conditions) : null}
+                        </List.Item>
+                        <List.Item>
+                            Acquisition Price: {selectedId ? selectedId.acquisition_price + "$": null}
+                        </List.Item>
+                        <List.Item>
+                            Developer: {selectedId ? selectedId.developer.map(obj => obj.name).join(" ") : null}
+                        </List.Item>
+                        <List.Item>
+                            Publisher: {selectedId ? selectedId.publisher.map(obj => obj.name).join(" ") : null}
+                        </List.Item>
+                        <List.Item>
+                            {selectedId.genre ? "Genre: " + selectedId.genre : null}
+                        </List.Item>
+                        <List.Item>
+                            Platform: {selectedId ? selectedId.platform : null}
+                        </List.Item>
+                        <List.Item>
+                            Region: {selectedId ? convertRegionEnum(selectedId.region) : null}
+                        </List.Item>
+                        <List.Item>
+                            Release Date: {selectedId ? selectedId.release_date : null}
+                        </List.Item>
+                        <List.Item>
+                            {selectedId.series ? "Series: " + selectedId.series : null}
+                        </List.Item>
+                        <List.Item>
+                            Shelf: {selectedId ? selectedId.shelf : null}
+                        </List.Item>
+                        <List.Item>
+                            Stock Status: {selectedId ? convertStockEnum(selectedId.stock_status) : null}
+                        </List.Item>
+                    </list>
+
             </Modal>
         </>
 
