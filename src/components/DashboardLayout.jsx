@@ -61,8 +61,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getGames());
   }, [dispatch]);
-
-  console.log(games)
+  
   let isAdmin = isUserAdmin(user);
   let isSuperUser = isUserSuperUser(user);
 
