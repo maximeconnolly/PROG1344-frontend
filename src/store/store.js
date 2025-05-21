@@ -6,6 +6,8 @@ import gameReducer from "./gameSlice.js";
 import rentalsReducer from "./rentalSlice";
 import salesReducer from "./salesSlice";
 import userReducer from "./userSlice";
+import gameCompaniesReducer from "./gameCompanySlice";
+import platformReducer from "./platformSlice";
 
 // Configure all store
 export const store = configureStore({
@@ -17,5 +19,7 @@ export const store = configureStore({
         rentals: rentalsReducer,
         sales: salesReducer,
         user: userReducer,
+        gameCompanies: gameCompaniesReducer,
+        platforms: platformReducer,
     }
 })

@@ -12,9 +12,11 @@ const GameList = (props) =>{
     const [form] = Form.useForm();
     const [updateForm] = Form.useForm();
     let games = props.games.games;
-
-    let isAdmin = isUserAdmin(props.user)
+    let isAdmin = isUserAdmin(props.user);
     let isGuest = isUserGuest(props.user);
+    let platforms = props.platforms.platforms;
+
+    console.log(platforms);
 
 
     const onDelete = () => {
@@ -68,6 +70,9 @@ const GameList = (props) =>{
             title: 'Platform',
             dataIndex: 'platform',
             key: 'platform',
+            render: (record) => {
+                return(getPlatformName(record))
+            },
             filters: [
                 {
                     text:"Playstation 2",
@@ -141,6 +146,12 @@ const GameList = (props) =>{
     const [isGameDetailModalVisible, setIsGameDetailModalVisible] = useState(false);
 
     let [selectedId, setSelectedId] = useState(null);
+
+
+
+    const getPlatformName = (platform) => {
+        return platforms.find(obj => obj.id === platform)?.name || null;
+    }
 
     const showGameUpdateModal = () => {
         setIsGameUpdateVisible(true);
@@ -280,10 +291,10 @@ const GameList = (props) =>{
                 onCancel={handleCancleGameDetailModal}
                 title={(selectedId ? selectedId.name : null) + " - Details"}
                 footer={null}>
-                    <list
+                    <List
                         header={null}
                         footer={null}
-                        bordered={true}
+                        bordered
                     >
                         <List.Item>
                             Name: {selectedId ? selectedId.name : null}
@@ -301,10 +312,10 @@ const GameList = (props) =>{
                             Publisher: {selectedId ? selectedId.publisher.map(obj => obj.name).join(" ") : null}
                         </List.Item>
                         <List.Item>
-                            {selectedId.genre ? "Genre: " + selectedId.genre : null}
+                            {selectedId ? "Genre: " + selectedId.genre : null}
                         </List.Item>
                         <List.Item>
-                            Platform: {selectedId ? selectedId.platform : null}
+                            Platform: {selectedId ? getPlatformName(selectedId.platform) : null}
                         </List.Item>
                         <List.Item>
                             Region: {selectedId ? convertRegionEnum(selectedId.region) : null}
@@ -313,7 +324,7 @@ const GameList = (props) =>{
                             Release Date: {selectedId ? selectedId.release_date : null}
                         </List.Item>
                         <List.Item>
-                            {selectedId.series ? "Series: " + selectedId.series : null}
+                            {selectedId ? "Series: " + selectedId.series : null}
                         </List.Item>
                         <List.Item>
                             Shelf: {selectedId ? selectedId.shelf : null}
@@ -321,7 +332,7 @@ const GameList = (props) =>{
                         <List.Item>
                             Stock Status: {selectedId ? convertStockEnum(selectedId.stock_status) : null}
                         </List.Item>
-                    </list>
+                    </List>
 
             </Modal>
         </>

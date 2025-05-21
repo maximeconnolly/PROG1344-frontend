@@ -1,7 +1,7 @@
 import axiosInstance from "../utils/axiosInstance.js";
 
 export const getGameCompany = async () => {
-    const response = await axiosInstance.get('/api/game_company')
+    const response = await axiosInstance.get('/api/game_company/')
     return response.data;
 }
 

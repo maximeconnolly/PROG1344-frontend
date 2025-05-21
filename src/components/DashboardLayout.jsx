@@ -25,6 +25,8 @@ import SettingList from "./SettingList"
 import SaleList from "./SaleList";
 import {logout} from "../store/authSlice.js";
 import {getUser} from "../store/userSlice.js";
+import {getGameCompanies} from "../store/gameCompanySlice.js";
+import {getPlatforms} from "../store/platformSlice.js";
 import {isUserSuperUser, isUserAdmin} from "../utils/authHelper.js";
 import {getGames} from "../store/gameSlice.js";
 
@@ -41,9 +43,19 @@ const Dashboard = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const user = useSelector((state) => state.user);
   const games = useSelector(state => state.games)
+  const gamesCompanies = useSelector((state) => state.gameCompanies);
+  const platforms = useSelector(state => state.platforms);
+
+  useEffect(() => {
+    dispatch(getPlatforms());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getGameCompanies());
   }, [dispatch]);
 
   useEffect(() => {
@@ -66,7 +78,7 @@ const Dashboard = () => {
   if (selectedItem === null || selectedItem === '1'){
     content = <DashboardContent user={user} />;
   } else if (selectedItem === '2') {
-    content = <GameList user={user} games={games} />;
+    content = <GameList gameCompanies={gamesCompanies} user={user} games={games} platforms={platforms} />;
   } else if (selectedItem === '3') {
     content = <RentalList user={user} />;
   } else if (selectedItem === '4'){
