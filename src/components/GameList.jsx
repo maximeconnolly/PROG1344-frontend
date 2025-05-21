@@ -15,6 +15,7 @@ const GameList = (props) =>{
     let isAdmin = isUserAdmin(props.user);
     let isGuest = isUserGuest(props.user);
     let platforms = props.platforms.platforms;
+    let genres = props.genres.genres;
 
     console.log(platforms);
 
@@ -151,6 +152,10 @@ const GameList = (props) =>{
 
     const getPlatformName = (platform) => {
         return platforms.find(obj => obj.id === platform)?.name || null;
+    }
+
+    const getGenreName = (genre) => {
+        return genres.find(obj => obj.id === genre)?.name || null;
     }
 
     const showGameUpdateModal = () => {
@@ -312,7 +317,7 @@ const GameList = (props) =>{
                             Publisher: {selectedId ? selectedId.publisher.map(obj => obj.name).join(" ") : null}
                         </List.Item>
                         <List.Item>
-                            {selectedId ? "Genre: " + selectedId.genre : null}
+                            {selectedId && selectedId.genre ? "Genre: " + getGenreName(selectedId.genre) : null}
                         </List.Item>
                         <List.Item>
                             Platform: {selectedId ? getPlatformName(selectedId.platform) : null}

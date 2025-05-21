@@ -29,6 +29,7 @@ import {getGameCompanies} from "../store/gameCompanySlice.js";
 import {getPlatforms} from "../store/platformSlice.js";
 import {isUserSuperUser, isUserAdmin} from "../utils/authHelper.js";
 import {getGames} from "../store/gameSlice.js";
+import {getGenre} from "../store/genreSlice.js";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -45,9 +46,14 @@ const Dashboard = () => {
   const games = useSelector(state => state.games)
   const gamesCompanies = useSelector((state) => state.gameCompanies);
   const platforms = useSelector(state => state.platforms);
+  const genres = useSelector(state => state.genres);
 
   useEffect(() => {
     dispatch(getPlatforms());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getGenre());
   }, [dispatch]);
 
   useEffect(() => {
@@ -77,7 +83,7 @@ const Dashboard = () => {
   if (selectedItem === null || selectedItem === '1'){
     content = <DashboardContent user={user} />;
   } else if (selectedItem === '2') {
-    content = <GameList gameCompanies={gamesCompanies} user={user} games={games} platforms={platforms} />;
+    content = <GameList genres={genres} gameCompanies={gamesCompanies} user={user} games={games} platforms={platforms} />;
   } else if (selectedItem === '3') {
     content = <RentalList user={user} />;
   } else if (selectedItem === '4'){

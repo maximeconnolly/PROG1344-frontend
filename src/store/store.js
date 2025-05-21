@@ -8,6 +8,7 @@ import salesReducer from "./salesSlice";
 import userReducer from "./userSlice";
 import gameCompaniesReducer from "./gameCompanySlice";
 import platformReducer from "./platformSlice";
+import genreReducer from "./genreSlice";
 
 // Configure all store
 export const store = configureStore({
@@ -21,5 +22,6 @@ export const store = configureStore({
         user: userReducer,
         gameCompanies: gameCompaniesReducer,
         platforms: platformReducer,
+        genres: genreReducer,
     }
 })
