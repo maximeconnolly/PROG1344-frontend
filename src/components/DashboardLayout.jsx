@@ -22,6 +22,7 @@ import CopywriteFooter from "./CopywriteFooter";
 import GameList from "./GameList";
 import RentalList from "./RentalList";
 import SettingList from "./SettingList"
+import GenreList from "./GenreList";
 import SaleList from "./SaleList";
 import {logout} from "../store/authSlice.js";
 import {getUser} from "../store/userSlice.js";
@@ -33,8 +34,9 @@ import {getGenre} from "../store/genreSlice.js";
 import {getSeries} from "../store/seriesSlice.js";
 import {getStats} from "../store/statsSlice.js";
 
-const {Header, Content, Footer, Sider} = Layout;
 
+const {Header, Content, Footer, Sider} = Layout;
+const {SubMenu} = Menu;
 
 
 const Dashboard = () => {
@@ -94,7 +96,7 @@ const Dashboard = () => {
   // Switch case pour change la page
   if (selectedItem === null || selectedItem === '1'){
     content = <DashboardContent stats={stats} user={user} />;
-  } else if (selectedItem === '2') {
+  } else if (selectedItem === '2-1') {
     content = <GameList
         series={series}
         genres={genres}
@@ -103,7 +105,13 @@ const Dashboard = () => {
         games={games}
         platforms={platforms}
     />;
-  } else if (selectedItem === '3') {
+  }else if (selectedItem === '2-2'){
+      content = <GenreList
+        genres={genres}
+        user={user}
+      />
+  }
+  else if (selectedItem === '3') {
     content = <RentalList user={user} />;
   } else if (selectedItem === '4'){
     content = <SaleList />;
@@ -126,10 +134,13 @@ const Dashboard = () => {
           <Menu.Item key="1" icon={<HomeOutlined />}>
             Home
           </Menu.Item>
-          <Menu.Item key="2" icon={<FontAwesomeIcon icon={faGamepad} />}>
-            Games
-          </Menu.Item>
-          {(isAdmin || isSuperUser) ? 
+          <SubMenu key="2" title="Games" icon={<FontAwesomeIcon icon={faGamepad} />}>
+            <Menu.Item key="2-1">Game List</Menu.Item>
+            <Menu.Item key="2-2">Genre List</Menu.Item>
+            <Menu.Item key="2-3">Series List</Menu.Item>
+            <Menu.Item key="2-4">Platform List</Menu.Item>
+          </SubMenu>
+          {(isAdmin || isSuperUser) ?
           <Menu.Item key="3" icon={<FontAwesomeIcon icon={faHandHoldingHand}/>} >
             Rental
           </Menu.Item> : <></>

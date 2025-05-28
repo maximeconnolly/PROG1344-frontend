@@ -13,6 +13,7 @@ const GameList = (props) =>{
     const dispatch = useDispatch();
     const [form] = Form.useForm();
     const [updateForm] = Form.useForm();
+
     let games = props.games.games;
     let isAdmin = isUserAdmin(props.user);
     let isGuest = isUserGuest(props.user);
@@ -34,14 +35,7 @@ const GameList = (props) =>{
     }
 
     const onUpdate = async (values) => {
-        // dispatch(updateGames({
-        //     key: values.key,
-        //     name: values.name,
-        //     platform: values.platform,
-        //     year: values.year
-        // }))
         let release_date = values.release_date.format("YYYY-MM-DD");
-        console.log(values);
         await dispatch(updateGame({
             id: values.key,
             name: values.name,
@@ -58,7 +52,6 @@ const GameList = (props) =>{
             region: values.region,
             value: values.value,
         }))
-        console.log(values.key);
         selectedId = null;
         updateForm.resetFields();
         await dispatch(getGames());
@@ -90,7 +83,7 @@ const GameList = (props) =>{
           width: 100,
           render: (record) => {return (<Button type="primary" onClick={() => {
               setSelectedId(record);
-              console.log(record);
+
               showGameDetailModal();
           }}>Details</Button>)}
         },
@@ -101,7 +94,6 @@ const GameList = (props) =>{
             render: (record) => {return (<Button type="primary" disabled={ isGuest } onClick={() => {
                 setSelectedId(record);
                 showGameUpdateModal();
-                console.log(record);
                 updateForm.setFieldsValue({
                     key: record.id,
                     name: record.name,
@@ -133,9 +125,7 @@ const GameList = (props) =>{
 
 
     const addGame = async (values) => {
-        console.log(values);
         let release_date = values.release_date.format("YYYY-MM-DD");
-        console.log(values.release_date.format("YYYY-MM-DD"));
         await dispatch(createGame({
             name: values.name,
             publisher: values.publisher,
@@ -173,7 +163,6 @@ const GameList = (props) =>{
     }
 
     const getSeriesName = (serie) => {
-        console.log(serie);
         if (serie == null) {
             return null;
         }
@@ -219,8 +208,6 @@ const GameList = (props) =>{
         <>
             <h3>Game List</h3>
             <Button type="primary" className="new-element-button" disabled={isGuest} onClick={showGameAddModal}>Add Game to List</Button>
-            <Button type="primary" className="new-element-button" disabled={isGuest}>Add new Genre</Button>
-            <Button type="primary" className="new-element-button" disabled={isGuest}>Add new Serie</Button>
             <Table 
                 columns={columns}
                 dataSource={[...games]}
