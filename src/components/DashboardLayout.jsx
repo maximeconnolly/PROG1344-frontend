@@ -30,6 +30,7 @@ import {getPlatforms} from "../store/platformSlice.js";
 import {isUserSuperUser, isUserAdmin} from "../utils/authHelper.js";
 import {getGames} from "../store/gameSlice.js";
 import {getGenre} from "../store/genreSlice.js";
+import {getSeries} from "../store/seriesSlice.js";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -47,6 +48,7 @@ const Dashboard = () => {
   const gamesCompanies = useSelector((state) => state.gameCompanies);
   const platforms = useSelector(state => state.platforms);
   const genres = useSelector(state => state.genres);
+  const series = useSelector(state => state.series);
 
   useEffect(() => {
     dispatch(getPlatforms());
@@ -67,6 +69,10 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getGames());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getSeries());
+  }, [dispatch]);
   
   let isAdmin = isUserAdmin(user);
   let isSuperUser = isUserSuperUser(user);
@@ -83,7 +89,14 @@ const Dashboard = () => {
   if (selectedItem === null || selectedItem === '1'){
     content = <DashboardContent user={user} />;
   } else if (selectedItem === '2') {
-    content = <GameList genres={genres} gameCompanies={gamesCompanies} user={user} games={games} platforms={platforms} />;
+    content = <GameList
+        series={series}
+        genres={genres}
+        gameCompanies={gamesCompanies}
+        user={user}
+        games={games}
+        platforms={platforms}
+    />;
   } else if (selectedItem === '3') {
     content = <RentalList user={user} />;
   } else if (selectedItem === '4'){

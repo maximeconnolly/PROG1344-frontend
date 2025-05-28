@@ -9,14 +9,14 @@ export const getGameDetailAPI = async (gameID) => {
     return response.data;
 }
 export const createGameAPI = async (game) => {
-    const response = await axiosInstance.post("/api/game", game);
+    const response = await axiosInstance.post("/api/game/", game);
     return response.data;
 }
 export const updateGameAPI = async (game) => {
-    const response = await axiosInstance.put(`/api/game/${game.id}`, game);
+    const response = await axiosInstance.put(`/api/game/${game.id}/`, game);
     return response.data;
 }
 export const deleteGameAPI = async (gameID) => {
-    const response = await axiosInstance.delete(`/api/game/${gameID}`);
+    const response = await axiosInstance.delete(`/api/game/${gameID}/`);
     return response.data;
 }

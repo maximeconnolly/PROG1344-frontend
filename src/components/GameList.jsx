@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Table, Modal, Form, Input, List } from 'antd';
-//import { addGames, deleteGames, updateGames } from '../store/gameSlice.js';
+import {Button, Table, Modal, Form, Input, List, Select, DatePicker} from 'antd';
+import { getGames, createGame, deleteGame, updateGame } from '../store/gameSlice.js';
 import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
 import {convertRegionEnum, convertConditionEnum, convertStockEnum} from "../utils/enumHelper.js";
+import dayjs from 'dayjs';
 
 
 const GameList = (props) =>{
@@ -16,28 +17,50 @@ const GameList = (props) =>{
     let isGuest = isUserGuest(props.user);
     let platforms = props.platforms.platforms;
     let genres = props.genres.genres;
+    let series = props.series.series;
+    let gameCompanies = props.gameCompanies.gameCompanies;
 
-    console.log(platforms);
+    useEffect(() => {
+        dispatch(getGames());
+    }, [dispatch]);
 
 
-    const onDelete = () => {
-        // dispatch(deleteGames({
-        //     key: selectedId.key
-        // }));
+    const onDelete = async () => {
+        await dispatch(deleteGame(selectedId.id)).unwrap();
+        dispatch(getGames());
         selectedId = null;
         handleCancelGameDeleteModal();
     }
 
-    const onUpdate = (values) => {
+    const onUpdate = async (values) => {
         // dispatch(updateGames({
         //     key: values.key,
         //     name: values.name,
         //     platform: values.platform,
         //     year: values.year
         // }))
+        let release_date = values.release_date.format("YYYY-MM-DD");
+        console.log(values);
+        await dispatch(updateGame({
+            id: values.key,
+            name: values.name,
+            publisher: values.publisher,
+            developer: values.developer,
+            series: values.series,
+            acquisition_price: values.acquisition_price,
+            stock_status: values.stock_status,
+            platform: values.platform,
+            shelf: values.shelf,
+            genre: values.genre,
+            release_date: release_date,
+            conditions: values.conditions,
+            region: values.region,
+            value: values.value,
+        }))
         console.log(values.key);
         selectedId = null;
         updateForm.resetFields();
+        await dispatch(getGames());
         handleCancelGameUpdateModal();
     }
 
@@ -51,21 +74,6 @@ const GameList = (props) =>{
             title: 'Release Date',
             dataIndex: 'release_date',
             key: 'release_date',
-            filters: [
-                {
-                    text:1990,
-                    value: 1990
-                },
-                {
-                    text: 1998,
-                    value: 1998
-                },
-                {
-                    text: 1999,
-                    value: 1999
-                }
-            ],
-            onFilter: (value, record) => record.year.indexOf(value) === 0,
         },
         {
             title: 'Platform',
@@ -74,21 +82,6 @@ const GameList = (props) =>{
             render: (record) => {
                 return(getPlatformName(record))
             },
-            filters: [
-                {
-                    text:"Playstation 2",
-                    value: "Playstation 2"
-                },
-                {
-                    text: "Playstation",
-                    value: "Playstation"
-                },
-                {
-                    text: "Gamecube",
-                    value: "Gamecube"
-                }
-            ],
-            onFilter: (value, record) => record.platform.indexOf(value) === 0,
         },
         {
           title: 'Detail',
@@ -107,11 +100,22 @@ const GameList = (props) =>{
             render: (record) => {return (<Button type="primary" disabled={ isGuest } onClick={() => {
                 setSelectedId(record);
                 showGameUpdateModal();
+                console.log(record);
                 updateForm.setFieldsValue({
+                    key: record.id,
                     name: record.name,
+                    publisher: record.publisher,
+                    developer: record.developer,
+                    series: record.series,
+                    acquisition_price: record.acquisition_price,
+                    stock_status: record.stock_status,
                     platform: record.platform,
-                    year: record.year,
-                    key: record.key
+                    shelf: record.shelf,
+                    genre: record.genre,
+                    release_date: dayjs(record.release_date),
+                    conditions: record.conditions,
+                    region: record.region,
+                    value: record.value,
                 })
             }}>Edit</Button>)}
         },
@@ -127,17 +131,26 @@ const GameList = (props) =>{
     ];
 
 
-    const addGame = (values) => {
-        const gameName = values.name;
-        const gamePlatform = values.platform;
-        const gameYear = values.year;
-
-        // dispatch(addGames({
-        //     name: gameName,
-        //     platform: gamePlatform,
-        //     year: gameYear
-        // }));
-        form.resetFields();
+    const addGame = async (values) => {
+        console.log(values);
+        let release_date = values.release_date.format("YYYY-MM-DD");
+        console.log(values.release_date.format("YYYY-MM-DD"));
+        await dispatch(createGame({
+            name: values.name,
+            publisher: values.publisher,
+            developer: values.developer,
+            series: values.series,
+            acquisition_price: values.acquisition_price,
+            stock_status: values.stock_status,
+            platform: values.platform,
+            shelf: values.shelf,
+            genre: values.genre,
+            release_date: release_date,
+            conditions: values.conditions,
+            region: values.region,
+            value: values.value,
+        }));
+        await dispatch(getGames());
         handleCancelGameAddModal();
     }
 
@@ -152,6 +165,18 @@ const GameList = (props) =>{
 
     const getPlatformName = (platform) => {
         return platforms.find(obj => obj.id === platform)?.name || null;
+    }
+
+    const getCompanyName = (publisher) => {
+        return gameCompanies.find(obj => obj.id === publisher)?.name || null;
+    }
+
+    const getSeriesName = (serie) => {
+        console.log(serie);
+        if (serie == null) {
+            return null;
+        }
+        return series.find(obj => obj.id === serie)?.name || null;
     }
 
     const getGenreName = (genre) => {
@@ -186,6 +211,7 @@ const GameList = (props) =>{
     }
     const handleCancelGameAddModal = () => {
         setIsGameAddModalVisible(false);
+        form.resetFields();
     }
 
     return (
@@ -194,8 +220,8 @@ const GameList = (props) =>{
             <Button type="primary" disabled={isGuest} onClick={showGameAddModal}>Add Game to List</Button>
             <Table 
                 columns={columns}
-                dataSource={games}
-                rowKey="id"
+                dataSource={[...games]}
+                rowKey="key"
                 scroll={{
                     x: 'max-content',
                     y: 55*5
@@ -216,20 +242,153 @@ const GameList = (props) =>{
                     >
                         <Input />
                     </Form.Item>
-        
+
+                    <Form.Item
+                        label="Publisher"
+                        name="publisher"
+                        rules={[{ required: true, message: "Enter a publisher!" }]}
+                    >
+                        <Select
+                            mode="multiple"
+                            showSearch
+                            optionFilterProp="label"
+                            options={(gameCompanies || []).map(gameCompanie => ({
+                                value: gameCompanie.id,
+                                label: gameCompanie.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Developer"
+                        name="developer"
+                        rules={[{ required: true, message: "Enter a developer!" }]}
+                    >
+                        <Select
+                            mode="multiple"
+                            showSearch
+                            optionFilterProp="label"
+                            options={(gameCompanies || []).map(gameCompanie => ({
+                                value: gameCompanie.id,
+                                label: gameCompanie.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Series"
+                        name="series"
+                        rules={[{ required: true, message: "Enter a series!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(series || []).map(series => ({
+                                value: series.id,
+                                label: series.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Acquisition Price"
+                        name="acquisition_price"
+                        rules={[{ required: true, message: "Enter a acquisition price!" }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Stock Status"
+                        name="stock_status"
+                        rules={[{ required: true, message: "Enter a stock status!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={[
+                                {value: '1', label: 'In Stock'},
+                                {value: '2', label: 'Out of Stock'},
+                                {value: '3', label:'On Loan'}
+                            ]}
+                        />
+                    </Form.Item>
                     <Form.Item
                         label="Platform"
                         name="platform"
                         rules={[{ required: true, message: "Enter a platform!" }]}
                     >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(platforms || []).map(platform => ({
+                                value: platform.id,
+                                label: platform.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Value"
+                        name="value"
+                        rules={[{ required: true, message: "Enter a value!" }]}
+                    >
                         <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Shelf"
+                        name="shelf"
+                        rules={[{ required: true, message: "Enter a Shelf!" }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Genre"
+                        name="genre"
+                        rules={[{ required: true, message: "Enter a genre!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(genres || []).map(genre => ({
+                                value: genre.id,
+                                label: genre.name,
+                            }))}
+                        />
                     </Form.Item>
                     <Form.Item
                         label="Release Date"
                         name="release_date"
-                        rules={[{ required: true, message: "Enter a year!" }]}
+                        rules={[{ required: true, message: "Enter a release date!" }]}
                     >
-                        <Input />
+                        <DatePicker />
+                    </Form.Item>
+                    <Form.Item
+                        label="Condition"
+                        name="conditions"
+                        rules={[{ required: true, message: "Enter a conditions!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={[
+                                {value: 1, label:"Sealed" },
+                                {value:2, label:"Complete In Box"},
+                                {value:3, label: "Loose"}
+                            ]}
+
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Region"
+                        name="region"
+                        rules={[{ required: true, message: "Enter a region!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={[
+                                {value:1, label: "USA"},
+                                {value:2, label:"Europe"},
+                                {value:3, label: "Japan"},
+                                {value:4, label: "Other"}
+                            ]}
+                        />
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Add Game
@@ -264,26 +423,159 @@ const GameList = (props) =>{
                         <Input />
                     </Form.Item>
                     <Form.Item
-                    label="Game Name"
-                    name="name"
-                    rules={[{ required: true, message: "Enter a game name!" }]}
+                        label="Game Name"
+                        name="name"
+                        rules={[{ required: true, message: "Enter a game name!" }]}
                     >
                         <Input />
                     </Form.Item>
-        
+
+                    <Form.Item
+                        label="Publisher"
+                        name="publisher"
+                        rules={[{ required: true, message: "Enter a publisher!" }]}
+                    >
+                        <Select
+                            mode="multiple"
+                            showSearch
+                            optionFilterProp="label"
+                            options={(gameCompanies || []).map(gameCompanie => ({
+                                value: gameCompanie.id,
+                                label: gameCompanie.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Developer"
+                        name="developer"
+                        rules={[{ required: true, message: "Enter a developer!" }]}
+                    >
+                        <Select
+                            mode="multiple"
+                            showSearch
+                            optionFilterProp="label"
+                            options={(gameCompanies || []).map(gameCompanie => ({
+                                value: gameCompanie.id,
+                                label: gameCompanie.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Series"
+                        name="series"
+                        rules={[{ required: true, message: "Enter a series!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(series || []).map(series => ({
+                                value: series.id,
+                                label: series.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Acquisition Price"
+                        name="acquisition_price"
+                        rules={[{ required: true, message: "Enter a acquisition price!" }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Stock Status"
+                        name="stock_status"
+                        rules={[{ required: true, message: "Enter a stock status!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={[
+                                {value: '1', label: 'In Stock'},
+                                {value: '2', label: 'Out of Stock'},
+                                {value: '3', label:'On Loan'}
+                            ]}
+                        />
+                    </Form.Item>
                     <Form.Item
                         label="Platform"
                         name="platform"
                         rules={[{ required: true, message: "Enter a platform!" }]}
                     >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(platforms || []).map(platform => ({
+                                value: platform.id,
+                                label: platform.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Value"
+                        name="value"
+                        rules={[{ required: true, message: "Enter a value!" }]}
+                    >
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label="Year"
-                        name="year"
-                        rules={[{ required: true, message: "Enter a year!" }]}
+                        label="Shelf"
+                        name="shelf"
+                        rules={[{ required: true, message: "Enter a Shelf!" }]}
                     >
                         <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Genre"
+                        name="genre"
+                        rules={[{ required: true, message: "Enter a genre!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(genres || []).map(genre => ({
+                                value: genre.id,
+                                label: genre.name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Release Date"
+                        name="release_date"
+                        rules={[{ required: true, message: "Enter a release date!" }]}
+                    >
+                        <DatePicker />
+                    </Form.Item>
+                    <Form.Item
+                        label="Condition"
+                        name="conditions"
+                        rules={[{ required: true, message: "Enter a conditions!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={[
+                                {value: 1, label:"Sealed" },
+                                {value:2, label:"Complete In Box"},
+                                {value:3, label: "Loose"}
+                            ]}
+
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Region"
+                        name="region"
+                        rules={[{ required: true, message: "Enter a region!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={[
+                                {value:1, label: "USA"},
+                                {value:2, label:"Europe"},
+                                {value:3, label: "Japan"},
+                                {value:4, label: "Other"}
+                            ]}
+                        />
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Update Game
@@ -311,10 +603,10 @@ const GameList = (props) =>{
                             Acquisition Price: {selectedId ? selectedId.acquisition_price + "$": null}
                         </List.Item>
                         <List.Item>
-                            Developer: {selectedId ? selectedId.developer.map(obj => obj.name).join(" ") : null}
+                            Developer: {selectedId ? selectedId.developer.map(obj => getCompanyName(obj)).join(" ") : null}
                         </List.Item>
                         <List.Item>
-                            Publisher: {selectedId ? selectedId.publisher.map(obj => obj.name).join(" ") : null}
+                            Publisher: {selectedId ? selectedId.publisher.map(obj => getCompanyName(obj)).join(" ") : null}
                         </List.Item>
                         <List.Item>
                             {selectedId && selectedId.genre ? "Genre: " + getGenreName(selectedId.genre) : null}
@@ -323,13 +615,13 @@ const GameList = (props) =>{
                             Platform: {selectedId ? getPlatformName(selectedId.platform) : null}
                         </List.Item>
                         <List.Item>
-                            Region: {selectedId ? convertRegionEnum(selectedId.region) : null}
+                            Region: {selectedId ? convertRegionEnum(selectedId.region) : ""}
                         </List.Item>
                         <List.Item>
-                            Release Date: {selectedId ? selectedId.release_date : null}
+                            Release Date: {selectedId ? selectedId.release_date : ""}
                         </List.Item>
                         <List.Item>
-                            {selectedId ? "Series: " + selectedId.series : null}
+                            {selectedId ? "Series: " + getSeriesName(selectedId.series) : ""}
                         </List.Item>
                         <List.Item>
                             Shelf: {selectedId ? selectedId.shelf : null}
