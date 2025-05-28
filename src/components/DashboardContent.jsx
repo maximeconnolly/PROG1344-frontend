@@ -15,7 +15,7 @@ import {useSelector} from "react-redux";
 
 
 const DashboardContent = (props) => {
-    const stats = useSelector((state) => state.dashboard.stats);
+    const stats = useSelector((state) => state.stats.stats);
 
 
 
@@ -26,21 +26,21 @@ const DashboardContent = (props) => {
                     <h3>Welcome {props.user.user}!</h3>
                     <Row gutter={[16, 16]}>
                         <Col xs={26} sm={14} md={10} lg={8}>
-                            <Card title="Sales" style={{textAlign: "center"}}>
+                            <Card title="Total Transaction" style={{textAlign: "center"}}>
                                 <DollarOutlined style={{fontSize: "32px", color: "#1890ff"}}/>
-                                <p style={{fontSize: "20px", margin: "10px 0"}}>{stats.revenue}$</p>
+                                <p style={{fontSize: "20px", margin: "10px 0"}}>{stats.total_transaction}</p>
                             </Card>
                         </Col>
                         <Col xs={26} sm={14} md={10} lg={8}>
                             <Card title="Total Games" style={{textAlign: "center"}}>
                                 <UserOutlined style={{fontSize: "32px", color: "#52c41a"}}/>
-                                <p style={{fontSize: "20px", margin: "10px 0"}}>{stats.gameInCollection}</p>
+                                <p style={{fontSize: "20px", margin: "10px 0"}}>{stats.total_game}</p>
                             </Card>
                         </Col>
                         <Col xs={26} sm={14} md={10} lg={8}>
-                            <Card title="Reviews" style={{textAlign: "center"}}>
+                            <Card title="Total Reviews" style={{textAlign: "center"}}>
                                 <ShoppingCartOutlined style={{fontSize: "32px", color: "#faad14"}}/>
-                                <p style={{fontSize: "20px", margin: "10px 0"}}>{stats.reviews}</p>
+                                <p style={{fontSize: "20px", margin: "10px 0"}}>{stats.total_review}</p>
                             </Card>
                         </Col>
 

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {Button, Table, Modal, Form, Input, List, Select, DatePicker} from 'antd';
+import './GameList.css'
 import { getGames, createGame, deleteGame, updateGame } from '../store/gameSlice.js';
 import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
 import {convertRegionEnum, convertConditionEnum, convertStockEnum} from "../utils/enumHelper.js";
@@ -217,7 +218,9 @@ const GameList = (props) =>{
     return (
         <>
             <h3>Game List</h3>
-            <Button type="primary" disabled={isGuest} onClick={showGameAddModal}>Add Game to List</Button>
+            <Button type="primary" className="new-element-button" disabled={isGuest} onClick={showGameAddModal}>Add Game to List</Button>
+            <Button type="primary" className="new-element-button" disabled={isGuest}>Add new Genre</Button>
+            <Button type="primary" className="new-element-button" disabled={isGuest}>Add new Serie</Button>
             <Table 
                 columns={columns}
                 dataSource={[...games]}

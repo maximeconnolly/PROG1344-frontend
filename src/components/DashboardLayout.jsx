@@ -31,6 +31,7 @@ import {isUserSuperUser, isUserAdmin} from "../utils/authHelper.js";
 import {getGames} from "../store/gameSlice.js";
 import {getGenre} from "../store/genreSlice.js";
 import {getSeries} from "../store/seriesSlice.js";
+import {getStats} from "../store/statsSlice.js";
 
 const {Header, Content, Footer, Sider} = Layout;
 
@@ -49,6 +50,11 @@ const Dashboard = () => {
   const platforms = useSelector(state => state.platforms);
   const genres = useSelector(state => state.genres);
   const series = useSelector(state => state.series);
+  const stats = useSelector(state => state.stats);
+
+  useEffect(() => {
+    dispatch(getStats());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getPlatforms());
@@ -87,7 +93,7 @@ const Dashboard = () => {
   let content;
   // Switch case pour change la page
   if (selectedItem === null || selectedItem === '1'){
-    content = <DashboardContent user={user} />;
+    content = <DashboardContent stats={stats} user={user} />;
   } else if (selectedItem === '2') {
     content = <GameList
         series={series}
