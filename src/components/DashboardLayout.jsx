@@ -23,6 +23,7 @@ import GameList from "./GameList";
 import RentalList from "./RentalList";
 import SettingList from "./SettingList"
 import GenreList from "./GenreList";
+import SeriesList from "./SeriesList";
 import SaleList from "./SaleList";
 import {logout} from "../store/authSlice.js";
 import {getUser} from "../store/userSlice.js";
@@ -110,6 +111,11 @@ const Dashboard = () => {
         genres={genres}
         user={user}
       />
+  } else if (selectedItem === '2-3'){
+    content = <SeriesList
+        series={series}
+        user={user}
+    />
   }
   else if (selectedItem === '3') {
     content = <RentalList user={user} />;
