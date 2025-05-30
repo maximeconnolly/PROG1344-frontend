@@ -24,9 +24,9 @@ const GenreList = (props) => {
 
     let genres = props.genres.genres;
 
-        useEffect(() => {
-            dispatch(getGenre());
-        }, [dispatch]);
+    useEffect(() => {
+        dispatch(getGenre());
+    }, [dispatch]);
 
     const columns = [
         {
@@ -102,6 +102,7 @@ const GenreList = (props) => {
         await dispatch(createGenre(values));
         await dispatch(getGenre());
         handleCancelAddGenreModal();
+        form.resetFields();
     }
 
     const onDelete = async () => {

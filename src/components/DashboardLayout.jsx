@@ -24,6 +24,7 @@ import RentalList from "./RentalList";
 import SettingList from "./SettingList"
 import GenreList from "./GenreList";
 import SeriesList from "./SeriesList";
+import PlatformList from "./PlatformList";
 import SaleList from "./SaleList";
 import {logout} from "../store/authSlice.js";
 import {getUser} from "../store/userSlice.js";
@@ -116,6 +117,11 @@ const Dashboard = () => {
         series={series}
         user={user}
     />
+  } else if (selectedItem === '2-4'){
+    content = <PlatformList
+        platforms={platforms}
+        user={user}
+    />;
   }
   else if (selectedItem === '3') {
     content = <RentalList user={user} />;
@@ -126,7 +132,7 @@ const Dashboard = () => {
     content = <SettingList />;
   }else if (selectedItem === '6'){
     dispatch(logout());
-  };
+  }
 
   
   return (

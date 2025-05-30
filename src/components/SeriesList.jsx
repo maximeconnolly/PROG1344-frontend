@@ -97,9 +97,10 @@ const SeriesList = (props) => {
         await dispatch(createSeries(values));
         await dispatch(getSeries());
         handleCancelAddSeriesModal();
+        form.resetFields();
     }
 
-    const onDelete = async (values) => {
+    const onDelete = async () => {
         await dispatch(deleteSeries(selectedId.id)).unwrap();
         await dispatch(getSeries());
         selectedId = null;
