@@ -25,6 +25,7 @@ import SettingList from "./SettingList"
 import GenreList from "./GenreList";
 import SeriesList from "./SeriesList";
 import PlatformList from "./PlatformList";
+import ClientList from './ClientList.jsx'
 import SaleList from "./SaleList";
 import {logout} from "../store/authSlice.js";
 import {getUser} from "../store/userSlice.js";
@@ -35,6 +36,7 @@ import {getGames} from "../store/gameSlice.js";
 import {getGenre} from "../store/genreSlice.js";
 import {getSeries} from "../store/seriesSlice.js";
 import {getStats} from "../store/statsSlice.js";
+import {getClients} from "../store/clientSlice.js";
 
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -55,6 +57,11 @@ const Dashboard = () => {
   const genres = useSelector(state => state.genres);
   const series = useSelector(state => state.series);
   const stats = useSelector(state => state.stats);
+  const clients = useSelector(state => state.clients);
+
+  useEffect(() => {
+    dispatch(getClients());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getStats());
@@ -123,13 +130,16 @@ const Dashboard = () => {
         user={user}
     />;
   }
-  else if (selectedItem === '3') {
+  else if (selectedItem === '3-1') {
     content = <RentalList user={user} />;
-  } else if (selectedItem === '4'){
-    content = <SaleList />;
+  }else if (selectedItem === '3-2'){
+    content = <ClientList user={user} clients={clients} />
+  }
+  else if (selectedItem === '4'){
+    content = <SaleList user={user} />;
 
   } else if (selectedItem === '5') {
-    content = <SettingList />;
+    content = <SettingList user={user} />;
   }else if (selectedItem === '6'){
     dispatch(logout());
   }
@@ -153,9 +163,10 @@ const Dashboard = () => {
             <Menu.Item key="2-4">Platform List</Menu.Item>
           </SubMenu>
           {(isAdmin || isSuperUser) ?
-          <Menu.Item key="3" icon={<FontAwesomeIcon icon={faHandHoldingHand}/>} >
-            Rental
-          </Menu.Item> : <></>
+          <SubMenu key="3" title="Rental" icon={<FontAwesomeIcon icon={faHandHoldingHand}/>} >
+            <Menu.Item key="3-1">Rental List</Menu.Item>
+            <Menu.Item key="3-2">Client List</Menu.Item>
+          </SubMenu> : <></>
           }
           {(isAdmin || isSuperUser) ? 
           <Menu.Item key="4" icon={<FontAwesomeIcon icon={faSackDollar} />} >
