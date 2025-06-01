@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import{ Button, Form, Table, Modal, Input} from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import {addRentals, deleteRentals, updateRentals} from '../store/rentalSlice';
+import {Button, Form, Table, Modal, Input, Select, DatePicker, InputNumber} from 'antd';
+import { useDispatch } from 'react-redux';
 import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
 
 const RentalList = (props) => {
 
     const dispatch = useDispatch();
-    const rentals = useSelector((state) => state.rentals.rentals)
+    const rentals = props.rentals.rentals;
+    const games = props.games.games;
+    const clients = props.clients.clients;
     const [isGameRentalAddModalVisible, setIsGameRentalAddModalVisible] =  useState(false);
     const [isGameRentalUpdateModalVisible, setIsGameRentalUpdateModalVisible] = useState(false);
     const [isGameRentalDeleteModalVisible, setIsGameRentalDeleteModalVisible] = useState(false);
@@ -23,18 +24,29 @@ const RentalList = (props) => {
     const columns = [
         {
             title: 'Game Name',
-            dataIndex: 'gameName',
-            key: 'gameName',
+            dataIndex: 'game',
+            key: 'game',
+            render: (record) => {
+                return getGameName(record);
+            }
         },
         {
             title: 'Client Name',
             dataIndex: 'clientName',
             key: 'clientName',
+            render: (record) => {
+                return getClientName(record);
+            }
+        },
+        {
+            title: 'Start Date',
+            dataIndex: 'start_time',
+            key: 'start_time',
         },
         {
             title: 'Return Date',
-            dataIndex: 'returnDate',
-            key: 'returnDate'
+            dataIndex: 'end_time',
+            key: 'end_time'
         },
         {
             title: 'Edit',
@@ -65,6 +77,16 @@ const RentalList = (props) => {
     ];
 
 
+    const getClientName = (client) => {
+        let clientName = clients.find(obj => obj.name === client)?.first_name + " " + clients.find(obj => obj.name === client)?.last_name;
+
+        return clientName;
+    };
+
+    const getGameName = (game) => {
+        return games.find(obj => obj.id === game)?.name
+    }
+
     const showGameAddRentalModal = () => {
         setIsGameRentalAddModalVisible(true);
     }
@@ -88,33 +110,14 @@ const RentalList = (props) => {
     }
 
     const onUpdate = (values) =>{
-        dispatch(updateRentals({
-            key: values.key,
-            gameName: values.gameName,
-            clientName: values.clientName,
-            returnDate: values.returnDate
-        }))
-        console.log(values.key)
-        selectedId = null;
-        updateForm.resetFields();
-        handleCancelUpdateRentalModal();
+
     }
     const onDelete = () => {
-        dispatch(deleteRentals({
-            key: selectedId.key
-        }));
-        selectedId = null;
-        handleCancelDeleteRentalModal();
+
     }
 
     const onAdd = (values) => {
-        dispatch(addRentals({
-            gameName: values.gameName,
-            clientName: values.clientName,
-            returnDate: values.returnDate
-        }))
-        addForm.resetFields();
-        handleCancelAddRentalModal();
+
     }
     return (
         <>
@@ -137,26 +140,54 @@ const RentalList = (props) => {
             >
                 <Form name="rental-add-form" layout="vertical" onFinish={onAdd} form={addForm}>
                     <Form.Item
-                    label="Game Name"
-                    name="gameName"
-                    rules={[{ required: true, message: "Enter a game name!" }]}
+                    label="Game"
+                    name="game"
+                    rules={[{ required: true, message: "Enter a game!" }]}
                     >
-                        <Input />
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(games || []).map(game => ({
+                                value: game.id,
+                                label: game.name,
+                            }))}
+                        />
                     </Form.Item>
 
                     <Form.Item
-                        label="Client Name"
-                        name="clientName"
-                        rules={[{ required: true, message: "Enter a platform!" }]}
+                        label="Client"
+                        name="client"
+                        rules={[{ required: true, message: "Enter a client!" }]}
                     >
-                        <Input />
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(clients || []).map(client => ({
+                                value: client.id,
+                                label: client.first_name + " " + client.last_name,
+                            }))}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label="Start Date"
+                        name="start_time"
+                        rules={[{ required: true, message: "Enter a start date!" }]}
+                    >
+                        <DatePicker />
                     </Form.Item>
                     <Form.Item
                         label="Return Date"
-                        name="returnDate"
-                        rules={[{ required: true, message: "Enter a year!" }]}
+                        name="end_time"
+                        rules={[{ required: true, message: "Enter a return date!" }]}
                     >
-                        <Input />
+                        <DatePicker />
+                    </Form.Item>
+                    <Form.Item
+                        label="Price"
+                        name="price"
+                        rules={[{ required: true, message: "Enter a price!" }]}
+                    >
+                        <InputNumber />
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Add Rental

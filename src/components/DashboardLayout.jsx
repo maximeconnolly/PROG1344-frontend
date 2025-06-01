@@ -37,6 +37,7 @@ import {getGenre} from "../store/genreSlice.js";
 import {getSeries} from "../store/seriesSlice.js";
 import {getStats} from "../store/statsSlice.js";
 import {getClients} from "../store/clientSlice.js";
+import {getRental} from "../store/rentalSlice.js";
 
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -58,6 +59,7 @@ const Dashboard = () => {
   const series = useSelector(state => state.series);
   const stats = useSelector(state => state.stats);
   const clients = useSelector(state => state.clients);
+  const rentals = useSelector(state => state.rentals);
 
   useEffect(() => {
     dispatch(getClients());
@@ -65,6 +67,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getStats());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getRental());
   }, [dispatch]);
 
   useEffect(() => {
@@ -131,7 +137,7 @@ const Dashboard = () => {
     />;
   }
   else if (selectedItem === '3-1') {
-    content = <RentalList user={user} />;
+    content = <RentalList user={user} rentals={rentals} games={games} clients={clients} />;
   }else if (selectedItem === '3-2'){
     content = <ClientList user={user} clients={clients} />
   }
