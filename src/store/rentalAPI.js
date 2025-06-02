@@ -16,6 +16,6 @@ export const updateRentalAPI = async (rental) => {
 }
 
 export const deleteRentalAPI = async (id) => {
-    const response = await axiosInstance.delete(`/api/rental/${id}`);
+    const response = await axiosInstance.delete(`/api/rental/${id}/`);
     return response.data;
 }

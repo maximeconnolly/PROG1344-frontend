@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import {Button, Form, Table, Modal, Input, Select, DatePicker, InputNumber} from 'antd';
 import { useDispatch } from 'react-redux';
 import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
+import {deleteRental, getRental, updateRental, createRental} from "../store/rentalSlice.js";
+import dayjs from 'dayjs';
 
 const RentalList = (props) => {
 
@@ -56,10 +58,13 @@ const RentalList = (props) => {
                 setSelectedId(record);
                 showGameUpdateRentalModal();
                 updateForm.setFieldsValue({
-                    gameName: record.gameName,
-                    clientName: record.clientName,
-                    returnDate: record.returnDate,
-                    key: record.key
+                    key: record.id,
+                    game: record.game,
+                    client: record.client,
+                    start_time: dayjs(record.start_time),
+                    end_time: dayjs(record.end_time),
+                    price: record.price,
+
                 })
             }}>Edit</Button>)}
         },
@@ -109,15 +114,44 @@ const RentalList = (props) => {
         setIsGameRentalDeleteModalVisible(false);
     }
 
-    const onUpdate = (values) =>{
-
+    const onUpdate = async (values) =>{
+        console.log(values);
+        let start_time = values.start_time.format("YYYY-MM-DD");
+        let end_time = values.end_time.format("YYYY-MM-DD");
+        await dispatch(updateRental({
+            id: values.key,
+            game: values.game,
+            client: values.client,
+            start_time: start_time,
+            end_time: end_time,
+            price: values.price,
+        }));
+        selectedId = null;
+        updateForm.resetFields();
+        await dispatch(getRental());
+        handleCancelUpdateRentalModal();
     }
-    const onDelete = () => {
-
+    const onDelete = async () => {
+        await dispatch(deleteRental(selectedId.id)).unwrap();
+        dispatch(getRental());
+        selectedId = null;
+        handleCancelDeleteRentalModal();
     }
 
-    const onAdd = (values) => {
+    const onAdd = async (values) => {
+        console.log(values);
+        let start_time = values.start_time.format("YYYY-MM-DD");
+        let end_time = values.end_time.format("YYYY-MM-DD");
 
+        await dispatch(createRental({
+            game: values.game,
+            client: values.client,
+            price: values.price,
+            start_time: start_time,
+            end_time: end_time,
+        }))
+        addForm.setFieldsValue({});
+        handleCancelAddRentalModal();
     }
     return (
         <>
@@ -204,7 +238,7 @@ const RentalList = (props) => {
                 cancelText="Cancel"
                 okButtonProps={{ danger: true}}
             >
-                Confirm deletion of rental {selectedId ? selectedId.gameName + " " + selectedId.returnDate : null}
+                Confirm deletion of rental {selectedId ? getGameName(selectedId.game) + " " + selectedId.end_time : null}
             </Modal>
             {/**Update Game Modal */}
             <Modal
@@ -215,33 +249,63 @@ const RentalList = (props) => {
             >
                 <Form name="rental-form-update" layout='vertical' onFinish={onUpdate} form={updateForm}>
                     <Form.Item
-                        style={{ display: 'none'}}
+                        style={{display: 'none'}}
                         name="key"
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label="Game Name"
-                        name="gameName"
-                        rules={[{ required: true, message: "Enter a game name!"}]}
+                        label="Game"
+                        name="game"
+                        rules={[{ required: true, message: "Enter a game!" }]}
                     >
-                        <Input />
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(games || []).map(game => ({
+                                value: game.id,
+                                label: game.name,
+                            }))}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Client"
+                        name="client"
+                        rules={[{ required: true, message: "Enter a client!" }]}
+                    >
+                        <Select
+                            showSearch
+                            optionFilterProp="label"
+                            options={(clients || []).map(client => ({
+                                value: client.id,
+                                label: client.first_name + " " + client.last_name,
+                            }))}
+                        />
                     </Form.Item>
                     <Form.Item
-                        label="Client Name"
-                        name="clientName"
-                        rules={[{ required: true, message: "Enter a client name!"}]}
+                        label="Start Date"
+                        name="start_time"
+                        rules={[{ required: true, message: "Enter a start date!" }]}
                     >
-                        <Input />
+                        <DatePicker />
                     </Form.Item>
                     <Form.Item
                         label="Return Date"
-                        name="returnDate"
+                        name="end_time"
+                        rules={[{ required: true, message: "Enter a return date!" }]}
                     >
-                        <Input />
+                        <DatePicker />
                     </Form.Item>
-                    <Button type="primary" htmlType='submit' block>
-                        Update Game
+                    <Form.Item
+                        label="Price"
+                        name="price"
+                        rules={[{ required: true, message: "Enter a price!" }]}
+                    >
+                        <InputNumber />
+                    </Form.Item>
+                    <Button type="primary" htmlType="submit" block>
+                        Update Rental
                     </Button>
                 </Form>
             </Modal>
