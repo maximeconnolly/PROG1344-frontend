@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {Form, Input, Modal, Table, Button} from 'antd';
 import {createClient, updateClient, getClients, deleteClient} from "../store/clientSlice.js";
-import "./GameList.css";
+import "./Lists.css";
 import {isUserGuest} from '../utils/authHelper.js'
 
 const ClientList = (props) => {
@@ -68,12 +68,13 @@ const ClientList = (props) => {
             width: 100,
             render: (record) => {
                 return <Button
-                type="primary"
-                danger
-                onClick={()=>{
-                    setSelectedId(record);
-                    showClientDeleteModal();
-                }}>
+                    type="primary"
+                    danger
+                    onClick={()=>{
+                        setSelectedId(record);
+                        showClientDeleteModal();
+                    }}
+                >
                     Delete
                 </Button>
             }
@@ -138,15 +139,15 @@ const ClientList = (props) => {
                 columns={columns}
                 dataSource={clients}
                 rowKey="key"
-                scroll={{x: 'max-content', y: 55*5}}>
-
+                scroll={{x:'max-content', y:55*5}}
+            >
             </Table>
 
             <Modal
-            title="Add Client"
-            open={isClientAddModalVisible}
-            onCancel={handleCancelAddClientModal}
-            footer={null}
+                title="Add Client"
+                open={isClientAddModalVisible}
+                onCancel={handleCancelAddClientModal}
+                footer={null}
             >
                 <Form name="client-form" layout="vertical" onFinish={addClient} form={form}>
                     <Form.Item
@@ -154,21 +155,21 @@ const ClientList = (props) => {
                         label="First Name"
                         rules={[{required:true, message: 'First Name is required'}]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         name="last_name"
                         label="Last Name"
                         rules={[{required:true, message: 'Last Name is required'}]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         name="telephone"
                         label="Telephone"
                         rules={[{required:true, message: 'Telephone is required'}]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Add New Client
@@ -182,8 +183,9 @@ const ClientList = (props) => {
                 onOk={onDelete}
                 okText="Yes"
                 cancelText="Cancel"
-                okButtonProps={{danger: true}}>
-                    Confirm deletion of Client {selectedId ? selectedId.first_name + " " + selectedId.last_name : null}
+                okButtonProps={{danger: true}}
+            >
+                Confirm deletion of Client {selectedId ? selectedId.first_name + " " + selectedId.last_name : null}
             </Modal>
             <Modal
                 title="Update Client"
@@ -196,29 +198,28 @@ const ClientList = (props) => {
                         style={{display: 'none'}}
                         name="key"
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
-
                     <Form.Item
                         name="first_name"
                         label="First Name"
                         rules={[{required:true, message: 'First Name is required'}]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         name="last_name"
                         label="Last Name"
                         rules={[{required:true, message: 'Last Name is required'}]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         name="telephone"
                         label="Telephone"
                         rules={[{required:true, message: 'Telephone is required'}]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Update Client
@@ -227,7 +228,6 @@ const ClientList = (props) => {
             </Modal>
         </>
     )
-
 }
 
 export default ClientList;

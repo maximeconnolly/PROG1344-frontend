@@ -1,7 +1,8 @@
 #root {
-  width: 100hh;
+  width:100hh
 }
 /* html main body color */
 html, body {
-  background: #888888;
+  margin:0;
+  background:white;
 }

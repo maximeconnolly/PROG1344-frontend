@@ -1,13 +1,8 @@
-/**
- * Composant qui affiche le copywrite en bas de la page
- */
-import React from 'react';
-
-const copywrite = "PROG1344 - CCNB"
+// Composant qui affiche le copywrite en bas de la page
 
 const CopywriteFooter = () => {
     return(
-        <>{copywrite}</>
+        <>{"PROG1344 - CCNB"}</>
     )
 }
 

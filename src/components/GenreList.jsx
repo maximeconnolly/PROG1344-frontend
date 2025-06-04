@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {Form, Input, Modal, Table} from "antd";
 import {createGenre, deleteGenre, getGenre, updateGenre} from "../store/genreSlice.js";
 import {Button} from "antd";
-import './GameList.css'
+import './Lists.css'
 import {isUserGuest} from "../utils/authHelper.js";
 
 
@@ -149,7 +149,7 @@ const GenreList = (props) => {
                         name="name"
                         rules={[{required: true, message: 'Please the genre name'}]}
                     >
-                        <Input />
+                        <Inpu/>
                     </Form.Item>
                     <Button type='primary' htmlType="submit" block>
                         Add Genre
@@ -178,14 +178,14 @@ const GenreList = (props) => {
                         style={{display: 'none'}}
                         name="key"
                         >
-                        <Input />
+                        <Inpu/>
                     </Form.Item>
                     <Form.Item
                         label="Name"
                         name="name"
                         rules={[{required: true, message: 'Please the genre name'}]}
                     >
-                        <Input />
+                        <Inpu/>
                     </Form.Item>
                     <Button type='primary' htmlType="submit" block>
                         Update Genre

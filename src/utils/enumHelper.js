@@ -32,6 +32,5 @@ export const convertTransactionEnum = (transaction) => {
         2: "Sold",
         3: "Loan"
     }
-
     return transactionEnum[transaction];
 }
