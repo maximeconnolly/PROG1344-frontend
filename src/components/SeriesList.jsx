@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {Button, Form, Input, Modal, Table} from "antd";
 import {createSeries, deleteSeries, getSeries, updateSeries} from "../store/seriesSlice.js";
-import './GameList.css';
+import './Lists.css';
 import {isUserGuest} from "../utils/authHelper.js";
 
 const SeriesList = (props) => {
@@ -137,9 +137,9 @@ const SeriesList = (props) => {
             >
                 <Form name="genre-form" layout="vertical" onFinish={addSeries} form={form}>
                     <Form.Item name="name" label="Name" rules={[{ required: true, message: "Please enter a name" }]}>
-                        <Input />
+                        <Input/>
                     </Form.Item>
-                    <Button type="primary" htmlType="submit" htmlType="submit" block>
+                    <Button type="primary" htmlType="submit" block>
                         Add Series
                     </Button>
                 </Form>
@@ -160,10 +160,10 @@ const SeriesList = (props) => {
                         style={{display: 'none'}}
                         name="key"
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item name="name" label="Name" rules={[{ required: true, message: "Please enter a name" }]}>
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block >
                         Update Series

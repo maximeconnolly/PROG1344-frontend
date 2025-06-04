@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Button, Form, Table, Modal, Input, Select, DatePicker, InputNumber} from 'antd';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
 import {deleteRental, getRental, updateRental, createRental} from "../store/rentalSlice.js";
 import dayjs from 'dayjs';
@@ -207,21 +207,21 @@ const RentalList = (props) => {
                         name="start_time"
                         rules={[{ required: true, message: "Enter a start date!" }]}
                     >
-                        <DatePicker />
+                        <DatePicker/>
                     </Form.Item>
                     <Form.Item
                         label="Return Date"
                         name="end_time"
                         rules={[{ required: true, message: "Enter a return date!" }]}
                     >
-                        <DatePicker />
+                        <DatePicker/>
                     </Form.Item>
                     <Form.Item
                         label="Price"
                         name="price"
                         rules={[{ required: true, message: "Enter a price!" }]}
                     >
-                        <InputNumber />
+                        <InputNumber/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Add Rental
@@ -252,7 +252,7 @@ const RentalList = (props) => {
                         style={{display: 'none'}}
                         name="key"
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Game"
@@ -288,21 +288,21 @@ const RentalList = (props) => {
                         name="start_time"
                         rules={[{ required: true, message: "Enter a start date!" }]}
                     >
-                        <DatePicker />
+                        <DatePicker/>
                     </Form.Item>
                     <Form.Item
                         label="Return Date"
                         name="end_time"
                         rules={[{ required: true, message: "Enter a return date!" }]}
                     >
-                        <DatePicker />
+                        <DatePicker/>
                     </Form.Item>
                     <Form.Item
                         label="Price"
                         name="price"
                         rules={[{ required: true, message: "Enter a price!" }]}
                     >
-                        <InputNumber />
+                        <InputNumber/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Update Rental

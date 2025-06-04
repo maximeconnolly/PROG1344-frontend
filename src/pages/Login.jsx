@@ -1,14 +1,9 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import { loginUser } from "../store/authSlice";
-import { notification, Form, Input, Button, Card, Typography} from "antd";
+import {loginUser} from "../store/authSlice";
+import {notification, Form, Input, Button, Card, Typography} from "antd";
 
 const { Title } = Typography;
-
-
-
-
-
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -68,7 +63,7 @@ const Login = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 rules={[{ required: true, message: "Please enter your username!" }]}
               >
-                <Input />
+                <Input/>
               </Form.Item>
     
               <Form.Item
@@ -78,7 +73,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 rules={[{ required: true, message: "Please enter your password!" }]}
               >
-                <Input.Password />
+                <Input.Password/>
               </Form.Item>
     
               <Button type="primary" disabled={status === 'loading'} htmlType="submit" block>

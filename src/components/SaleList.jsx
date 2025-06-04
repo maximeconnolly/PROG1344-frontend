@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
     Button,
     Form,
@@ -7,11 +7,11 @@ import {
     Input,
     Select,
     InputNumber,
-    DatePicker,
+    DatePicker
 } from 'antd';
-import { useDispatch } from "react-redux";
-import { CSVLink } from "react-csv";
-import { convertTransactionEnum } from "../utils/enumHelper.js";
+import {useDispatch} from "react-redux";
+import {CSVLink} from "react-csv";
+import {convertTransactionEnum} from "../utils/enumHelper.js";
 import {createSales, getSales, updateSales} from "../store/salesSlice.js";
 import dayjs from 'dayjs';
 
@@ -121,8 +121,8 @@ const SaleList = (props) => {
             <Button type="primary" onClick={showGameAddSaleModal}>
                 Add new Transaction
             </Button>
-            <br />
-            <br />
+            <br/>
+            <br/>
             <Button type="primary">
                 <CSVLink data={sales} filename={"Export-" + new Date() + ".csv"}>
                     Download CSV
@@ -185,14 +185,14 @@ const SaleList = (props) => {
                         name="amount"
                         rules={[{ required: true, message: "Enter a Transaction Amount!" }]}
                     >
-                        <InputNumber />
+                        <InputNumber/>
                     </Form.Item>
                     <Form.Item
                         label="Transaction Date"
                         name="date"
                         rules={[{ required: true, message: "Enter a Transaction Date!" }]}
                     >
-                        <DatePicker />
+                        <DatePicker/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Add Transaction
@@ -231,7 +231,7 @@ const SaleList = (props) => {
                         style={{display: 'none'}}
                         name="key"
                     >
-                        <Input />
+                        <Input/>
 
                     </Form.Item>
                     <Form.Item
@@ -268,14 +268,14 @@ const SaleList = (props) => {
                         name="amount"
                         rules={[{ required: true, message: "Enter a Transaction Amount!" }]}
                     >
-                        <InputNumber />
+                        <InputNumber/>
                     </Form.Item>
                     <Form.Item
                         label="Transaction Date"
                         name="date"
                         rules={[{ required: true, message: "Enter a Transaction Date!" }]}
                     >
-                        <DatePicker />
+                        <DatePicker/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Update Transaction
