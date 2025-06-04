@@ -15,7 +15,7 @@ const DashboardContent = (props) => {
 
     return(
         <>{props.user.status === 'done' ? <>
-            <h3>{Math.random() < 1/3 ? 'Velkommen' : 'Welcome'}, {props.user.user}!</h3>
+            <h3>Welcome, {props.user.user}!</h3>
             <Row gutter={[16, 16]}>
                 <Col xs={26} sm={14} md={10} lg={8}>
                     <Card title="Total Transaction" style={{textAlign: "center"}}>
