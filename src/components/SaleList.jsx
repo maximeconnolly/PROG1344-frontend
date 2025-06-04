@@ -121,8 +121,8 @@ const SaleList = (props) => {
             <Button type="primary" onClick={showGameAddSaleModal}>
                 Add new Transaction
             </Button>
-            <b/>
-            <b/>
+            <br/>
+            <br/>
             <Button type="primary">
                 <CSVLink data={sales} filename={"Export-" + new Date() + ".csv"}>
                     Download CSV
@@ -185,14 +185,14 @@ const SaleList = (props) => {
                         name="amount"
                         rules={[{ required: true, message: "Enter a Transaction Amount!" }]}
                     >
-                        <InputNumbe/>
+                        <InputNumber/>
                     </Form.Item>
                     <Form.Item
                         label="Transaction Date"
                         name="date"
                         rules={[{ required: true, message: "Enter a Transaction Date!" }]}
                     >
-                        <DatePicke/>
+                        <DatePicker/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Add Transaction
@@ -231,7 +231,7 @@ const SaleList = (props) => {
                         style={{display: 'none'}}
                         name="key"
                     >
-                        <Inpu/>
+                        <Input/>
 
                     </Form.Item>
                     <Form.Item
@@ -268,14 +268,14 @@ const SaleList = (props) => {
                         name="amount"
                         rules={[{ required: true, message: "Enter a Transaction Amount!" }]}
                     >
-                        <InputNumbe/>
+                        <InputNumber/>
                     </Form.Item>
                     <Form.Item
                         label="Transaction Date"
                         name="date"
                         rules={[{ required: true, message: "Enter a Transaction Date!" }]}
                     >
-                        <DatePicke/>
+                        <DatePicker/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Update Transaction

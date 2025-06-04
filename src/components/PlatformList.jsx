@@ -140,7 +140,7 @@ const PlatformList = (props) => {
                         name="name"
                         rules={[{required: true, message: 'Platform name is required'}]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block >
                         Add Platform
@@ -174,14 +174,14 @@ const PlatformList = (props) => {
                         style={{display: 'none'}}
                         name="key"
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Name"
                         name="name"
                         rules={[{required: true, message: 'Please the genre name'}]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Button type='primary' htmlType="submit" block>
                         Update Platform

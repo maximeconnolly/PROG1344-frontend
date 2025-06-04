@@ -137,7 +137,7 @@ const SeriesList = (props) => {
             >
                 <Form name="genre-form" layout="vertical" onFinish={addSeries} form={form}>
                     <Form.Item name="name" label="Name" rules={[{ required: true, message: "Please enter a name" }]}>
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block>
                         Add Series
@@ -160,10 +160,10 @@ const SeriesList = (props) => {
                         style={{display: 'none'}}
                         name="key"
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item name="name" label="Name" rules={[{ required: true, message: "Please enter a name" }]}>
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block >
                         Update Series

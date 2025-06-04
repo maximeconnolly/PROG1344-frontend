@@ -63,7 +63,7 @@ const Login = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 rules={[{ required: true, message: "Please enter your username!" }]}
               >
-                <Inpu/>
+                <Input/>
               </Form.Item>
     
               <Form.Item
@@ -73,7 +73,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 rules={[{ required: true, message: "Please enter your password!" }]}
               >
-                <Input.Passwor/>
+                <Input.Password/>
               </Form.Item>
     
               <Button type="primary" disabled={status === 'loading'} htmlType="submit" block>

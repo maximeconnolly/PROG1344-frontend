@@ -230,7 +230,7 @@ const GameList = (props) =>{
                     name="name"
                     rules={[{ required: true, message: "Enter a game name!" }]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
 
                     <Form.Item
@@ -282,7 +282,7 @@ const GameList = (props) =>{
                         name="acquisition_price"
                         rules={[{ required: true, message: "Enter a acquisition price!" }]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Stock Status"
@@ -318,14 +318,14 @@ const GameList = (props) =>{
                         name="value"
                         rules={[{ required: true, message: "Enter a value!" }]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Shelf"
                         name="shelf"
                         rules={[{ required: true, message: "Enter a Shelf!" }]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Genre"
@@ -346,7 +346,7 @@ const GameList = (props) =>{
                         name="release_date"
                         rules={[{ required: true, message: "Enter a release date!" }]}
                     >
-                        <DatePicke/>
+                        <DatePicker/>
                     </Form.Item>
                     <Form.Item
                         label="Condition"
@@ -410,14 +410,14 @@ const GameList = (props) =>{
                         style={{ display: 'none'}}
                         name="key"
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Game Name"
                         name="name"
                         rules={[{ required: true, message: "Enter a game name!" }]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
 
                     <Form.Item
@@ -469,7 +469,7 @@ const GameList = (props) =>{
                         name="acquisition_price"
                         rules={[{ required: true, message: "Enter a acquisition price!" }]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Stock Status"
@@ -505,14 +505,14 @@ const GameList = (props) =>{
                         name="value"
                         rules={[{ required: true, message: "Enter a value!" }]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Shelf"
                         name="shelf"
                         rules={[{ required: true, message: "Enter a Shelf!" }]}
                     >
-                        <Inpu/>
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Genre"
@@ -533,7 +533,7 @@ const GameList = (props) =>{
                         name="release_date"
                         rules={[{ required: true, message: "Enter a release date!" }]}
                     >
-                        <DatePicke/>
+                        <DatePicker/>
                     </Form.Item>
                     <Form.Item
                         label="Condition"
