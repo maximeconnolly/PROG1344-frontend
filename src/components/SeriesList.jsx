@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {Button, Form, Input, Modal, Table} from "antd";
 import {createSeries, deleteSeries, getSeries, updateSeries} from "../store/seriesSlice.js";
