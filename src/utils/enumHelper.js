@@ -25,3 +25,13 @@ export const convertStockEnum = (stock) => {
     }
     return stockEnum[stock];
 }
+
+export const convertTransactionEnum = (transaction) => {
+    const transactionEnum = {
+        1: "Buy",
+        2: "Sold",
+        3: "Loan"
+    }
+
+    return transactionEnum[transaction];
+}

@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-const copywrite = "PROG1185 - CCNB"
+const copywrite = "PROG1344 - CCNB"
 
 const CopywriteFooter = () => {
     return(

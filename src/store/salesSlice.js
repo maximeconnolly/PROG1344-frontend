@@ -1,51 +1,82 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {getSalesAPI, updateSalesAPI, createSalesAPI, deleteSalesAPI} from "./salesAPI.js";
+
+const initialState = {
+    sales: [],
+    status: 'idle',
+    error: null,
+}
+
+export const getSales = createAsyncThunk(
+    'sales/getSales',
+    async (_, thunkAPI) => {
+        try {
+            return await getSalesAPI();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error)
+        }
+    }
+);
+
+export const createSales = createAsyncThunk(
+    'sales/create',
+    async (sale, thunkAPI) => {
+        try {
+            return await createSalesAPI(sale);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error)
+        }
+    }
+);
+
+export const updateSales = createAsyncThunk(
+    'sales/update',
+    async (sale, thunkAPI) => {
+        try {
+            return await updateSalesAPI(sale);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
+export const deleteSales = createAsyncThunk(
+    'sales/delete',
+    async (saleId, thunkAPI) => {
+        try {
+            return await deleteSalesAPI(saleId);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
 
 const salesSlice = createSlice({
     name: "sales",
-    initialState: {
-        sales: [
-            {
-                key: 1,
-                transactionType: "Buy",
-                transactionAmount: "80.00",
-                gameName: "Metal Gear Solid",
-                transactionDate: "2024-03-01",
-            },
-            {
-                key: 2,
-                transactionType: "Sell",
-                transactionAmount: "10.00",
-                gameName: "Metal Gear Sonic 3",
-                transactionDate: "2024-04-01",
-            },
-            {
-                key: 3,
-                transactionType: "Buy",
-                transactionAmount: "80.00",
-                gameName: "Xenoblades Chronicles 3",
-                transactionDate: "2024-10-02",
-            }
-        ]
-    },
-    reducers:{
-        addSales: (state, action) => {
-            const sales = {
-                key: state.sales.length + 2,
-                transactionType: action.payload.transactionType,
-                transactionAmount: action.payload.transactionAmount,
-                gameName: action.payload.gameName,
-                transactionDate: action.payload.transactionDate
-            };
-            state.sales = [...state.sales, sales];
-        },
-        deleteSales: (state, action) => {
+    initialState,
+    reducers:{},
+    extraReducers:(builder) => {
+        builder.addCase(getSales.fulfilled, (state, action) => {
+            state.sales = action.payload;
+            state.status = 'done';
+        }).addCase(getSales.pending, (state) => {
+            state.status = 'loading';
+        }).addCase(getSales.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.payload;
+        }).addCase(createSales.fulfilled, (state, action) => {
+            state.sales.unshift(action.payload);
+        }).addCase(updateSales.fulfilled, (state, action) => {
+            const index = state.sales.findIndex(sale => sale.id === action.payload);
 
-        },
-        updateSales: (state, action) => {
-            state.sales = state.sales.map(sale => sale.key === action.payload.key ? action.payload : sale);
-        }
+            if (index !== 1){
+                state.sales[index] = action.payload;
+            }
+        }).addCase(deleteSales.fulfilled, (state, action) => {
+            state.sales = state.sales.filter(sale => sale.id !== action.payload);
+        });
     }
 });
 
-export const {addSales, deleteSales, updateSales} = salesSlice.actions;
 export default salesSlice.reducer;

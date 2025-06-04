@@ -115,7 +115,7 @@ const RentalList = (props) => {
     }
 
     const onUpdate = async (values) =>{
-        console.log(values);
+
         let start_time = values.start_time.format("YYYY-MM-DD");
         let end_time = values.end_time.format("YYYY-MM-DD");
         await dispatch(updateRental({
@@ -139,7 +139,7 @@ const RentalList = (props) => {
     }
 
     const onAdd = async (values) => {
-        console.log(values);
+
         let start_time = values.start_time.format("YYYY-MM-DD");
         let end_time = values.end_time.format("YYYY-MM-DD");
 

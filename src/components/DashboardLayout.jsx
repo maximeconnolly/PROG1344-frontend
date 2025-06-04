@@ -38,6 +38,7 @@ import {getSeries} from "../store/seriesSlice.js";
 import {getStats} from "../store/statsSlice.js";
 import {getClients} from "../store/clientSlice.js";
 import {getRental} from "../store/rentalSlice.js";
+import {getSales} from "../store/salesSlice.js";
 
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -60,6 +61,11 @@ const Dashboard = () => {
   const stats = useSelector(state => state.stats);
   const clients = useSelector(state => state.clients);
   const rentals = useSelector(state => state.rentals);
+  const sales = useSelector(state => state.sales);
+
+  useEffect(() => {
+    dispatch(getSales());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getClients());
@@ -142,7 +148,7 @@ const Dashboard = () => {
     content = <ClientList user={user} clients={clients} />
   }
   else if (selectedItem === '4'){
-    content = <SaleList user={user} />;
+    content = <SaleList user={user} games={games} sales={sales} />;
 
   } else if (selectedItem === '5') {
     content = <SettingList user={user} />;
