@@ -1,5 +1,5 @@
 // Page principale de l'application le dashboard
-import React from 'react'
+import React from 'react';
 import {Card, Row, Col, Spin} from "antd";
 
 import {
