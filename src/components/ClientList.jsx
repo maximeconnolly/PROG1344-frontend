@@ -1,4 +1,4 @@
-import React, import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {Form, Input, Modal, Table, Button} from 'antd';
 import {createClient, updateClient, getClients, deleteClient} from "../store/clientSlice.js";
