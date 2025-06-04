@@ -166,7 +166,7 @@ const Dashboard = () => {
       {/* Sidebar */}
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed} trigger={null}>
         <div className="logo" style={{color:"#fff", textAlign:"center", padding:"16px"}}>
-          {collapsed ? "":"Dashboard"}
+          {collapsed ? "" : "Dashboard"}
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]} selectedKeys={[selectedItem]} onClick={handleMenuClick}>
           <Menu.Item key="1" icon={<HomeOutlined/>}>
