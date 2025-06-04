@@ -10,7 +10,7 @@ Pour rouler le site en locale, nous avons besoin d'avoir NPM et Node d'installer
 ### Rouler le site en locale
 `npm install && npm run dev`
 
-S'assurer que la partie backend en python est fonctionel et est prêt pour recevoir les requetes.
+S'assurer que la partie backend en python est fonctionnelle et est prêt pour recevoir les requêtes.
 
 Naviguer sur `localhost:5173`
 
