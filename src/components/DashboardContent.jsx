@@ -1,5 +1,5 @@
 // Page principale de l'application le dashboard
-
+import React from 'react'
 import {Card, Row, Col, Spin} from "antd";
 
 import {
@@ -9,8 +9,6 @@ import {
 } from "@ant-design/icons";
 
 import {useSelector} from "react-redux";
-
-
 
 const DashboardContent = (props) => {
     const stats = useSelector((state) => state.stats.stats);
