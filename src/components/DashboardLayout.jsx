@@ -1,11 +1,10 @@
-/**
- * Contient la barre menu sur le coter
- */
+// Contient la barre menu sur le côté
+
 import React, {useEffect, useState} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
 
-import { Layout, Menu} from "antd";
+import {Layout, Menu} from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -15,7 +14,7 @@ import {
 } from "@ant-design/icons";
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faHandHoldingHand, faGamepad, faSackDollar } from "@fortawesome/free-solid-svg-icons";
+import {faHandHoldingHand, faGamepad, faSackDollar} from "@fortawesome/free-solid-svg-icons";
 
 import DashboardContent from "./DashboardContent";
 import CopywriteFooter from "./CopywriteFooter";
@@ -40,10 +39,8 @@ import {getClients} from "../store/clientSlice.js";
 import {getRental} from "../store/rentalSlice.js";
 import {getSales} from "../store/salesSlice.js";
 
-
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
-
 
 const Dashboard = () => {
   // const authenticatedUser = useSelector((state) => state.auth.user.username)
@@ -114,10 +111,11 @@ const Dashboard = () => {
   }
 
   let content;
-  // Switch case pour change la page
+  // Switch case pour changer la page
   if (selectedItem === null || selectedItem === '1'){
-    content = <DashboardContent stats={stats} user={user} />;
-  } else if (selectedItem === '2-1') {
+    content = <DashboardContent stats={stats} user={user}/>;
+  }
+  else if (selectedItem === '2-1'){
     content = <GameList
         series={series}
         genres={genres}
@@ -126,71 +124,77 @@ const Dashboard = () => {
         games={games}
         platforms={platforms}
     />;
-  }else if (selectedItem === '2-2'){
+  }
+  else if (selectedItem === '2-2'){
       content = <GenreList
         genres={genres}
         user={user}
-      />
-  } else if (selectedItem === '2-3'){
+      />;
+  }
+  else if (selectedItem === '2-3'){
     content = <SeriesList
         series={series}
         user={user}
-    />
-  } else if (selectedItem === '2-4'){
+    />;
+  }
+  else if (selectedItem === '2-4'){
     content = <PlatformList
         platforms={platforms}
         user={user}
     />;
   }
-  else if (selectedItem === '3-1') {
-    content = <RentalList user={user} rentals={rentals} games={games} clients={clients} />;
-  }else if (selectedItem === '3-2'){
-    content = <ClientList user={user} clients={clients} />
+  else if (selectedItem === '3-1'){
+    content = <RentalList user={user} rentals={rentals} games={games} clients={clients}/>;
+  }
+  else if (selectedItem === '3-2'){
+    content = <ClientList user={user} clients={clients}/>;
   }
   else if (selectedItem === '4'){
-    content = <SaleList user={user} games={games} sales={sales} />;
+    content = <SaleList user={user} games={games} sales={sales}/>;
 
-  } else if (selectedItem === '5') {
-    content = <SettingList user={user} />;
-  }else if (selectedItem === '6'){
+  }
+  else if (selectedItem === '5'){
+    content = <SettingList user={user}/>;
+  }
+  else if (selectedItem === '6'){
     dispatch(logout());
   }
 
   
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{minHeight:"100vh"}}>
       {/* Sidebar */}
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed} trigger={null}>
-        <div className="logo" style={{ color: "#fff", textAlign: "center", padding: "16px" }}>
+        <div className="logo" style={{color:"#fff", textAlign:"center", padding:"16px"}}>
           {collapsed ? "" : "Dashboard"}
         </div>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]} selectedKeys={[selectedItem]} onClick={handleMenuClick}>
-          <Menu.Item key="1" icon={<HomeOutlined />}>
+          <Menu.Item key="1" icon={<HomeOutlined/>}>
             Home
           </Menu.Item>
-          <SubMenu key="2" title="Games" icon={<FontAwesomeIcon icon={faGamepad} />}>
+          <SubMenu key="2" title="Games" icon={<FontAwesomeIcon icon={faGamepad}/>}>
             <Menu.Item key="2-1">Game List</Menu.Item>
             <Menu.Item key="2-2">Genre List</Menu.Item>
             <Menu.Item key="2-3">Series List</Menu.Item>
             <Menu.Item key="2-4">Platform List</Menu.Item>
           </SubMenu>
           {(isAdmin || isSuperUser) ?
-          <SubMenu key="3" title="Rental" icon={<FontAwesomeIcon icon={faHandHoldingHand}/>} >
+          <SubMenu key="3" title="Rental" icon={<FontAwesomeIcon icon={faHandHoldingHand}/>}>
             <Menu.Item key="3-1">Rental List</Menu.Item>
             <Menu.Item key="3-2">Client List</Menu.Item>
-          </SubMenu> : <></>
+          </SubMenu>:<></>
           }
-          {(isAdmin || isSuperUser) ? 
-          <Menu.Item key="4" icon={<FontAwesomeIcon icon={faSackDollar} />} >
+          {(isAdmin || isSuperUser) ?
+          <Menu.Item key="4" icon={<FontAwesomeIcon icon={faSackDollar}/>}>
             Sales
-          </Menu.Item> : <></>
+          </Menu.Item>:<></>
           }
-
-          {isSuperUser ? (          
-          <Menu.Item key="5" icon={<SettingOutlined />}>
+          {(isSuperUser) ?
+          <Menu.Item key="5" icon={<SettingOutlined/>}>
             Settings
-          </Menu.Item>): <></>};
-          <Menu.Item key="6" icon={<LogoutOutlined />}>
+          </Menu.Item>:<></>
+          }
+          <Menu.Item key="6" icon={<LogoutOutlined/>}>
             Logout
           </Menu.Item>
         </Menu>
@@ -209,7 +213,7 @@ const Dashboard = () => {
         <Content style={{ margin: "16px", padding: "16px", background: "#fff" }}>
           {content}
         </Content>
-        <Footer><CopywriteFooter /></Footer>
+        <Footer><CopywriteFooter/></Footer>
       </Layout>
     </Layout>
   );

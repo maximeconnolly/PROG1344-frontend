@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Button, Table, Modal, Form, Input, List, Select, DatePicker} from 'antd';
-import './GameList.css'
-import { getGames, createGame, deleteGame, updateGame } from '../store/gameSlice.js';
+import './Lists.css'
+import {getGames, createGame, deleteGame, updateGame} from '../store/gameSlice.js';
 import {isUserGuest, isUserAdmin} from "../utils/authHelper.js";
 import {convertRegionEnum, convertConditionEnum, convertStockEnum} from "../utils/enumHelper.js";
 import dayjs from 'dayjs';
@@ -230,7 +230,7 @@ const GameList = (props) =>{
                     name="name"
                     rules={[{ required: true, message: "Enter a game name!" }]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
 
                     <Form.Item
@@ -282,7 +282,7 @@ const GameList = (props) =>{
                         name="acquisition_price"
                         rules={[{ required: true, message: "Enter a acquisition price!" }]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Stock Status"
@@ -318,14 +318,14 @@ const GameList = (props) =>{
                         name="value"
                         rules={[{ required: true, message: "Enter a value!" }]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Shelf"
                         name="shelf"
                         rules={[{ required: true, message: "Enter a Shelf!" }]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Genre"
@@ -346,7 +346,7 @@ const GameList = (props) =>{
                         name="release_date"
                         rules={[{ required: true, message: "Enter a release date!" }]}
                     >
-                        <DatePicker />
+                        <DatePicker/>
                     </Form.Item>
                     <Form.Item
                         label="Condition"
@@ -410,14 +410,14 @@ const GameList = (props) =>{
                         style={{ display: 'none'}}
                         name="key"
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Game Name"
                         name="name"
                         rules={[{ required: true, message: "Enter a game name!" }]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
 
                     <Form.Item
@@ -469,7 +469,7 @@ const GameList = (props) =>{
                         name="acquisition_price"
                         rules={[{ required: true, message: "Enter a acquisition price!" }]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Stock Status"
@@ -505,14 +505,14 @@ const GameList = (props) =>{
                         name="value"
                         rules={[{ required: true, message: "Enter a value!" }]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Shelf"
                         name="shelf"
                         rules={[{ required: true, message: "Enter a Shelf!" }]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Genre"
@@ -533,7 +533,7 @@ const GameList = (props) =>{
                         name="release_date"
                         rules={[{ required: true, message: "Enter a release date!" }]}
                     >
-                        <DatePicker />
+                        <DatePicker/>
                     </Form.Item>
                     <Form.Item
                         label="Condition"

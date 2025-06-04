@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {Form, Input, Modal, Table, Button} from "antd";
 import {createPlatform, deletePlatform, getPlatforms, updatePlatform} from "../store/platformSlice.js";
-import "./GameList.css";
+import "./Lists.css";
 import {isUserGuest} from "../utils/authHelper.js";
 
 const PlatformList = (props) => {
@@ -140,7 +140,7 @@ const PlatformList = (props) => {
                         name="name"
                         rules={[{required: true, message: 'Platform name is required'}]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Button type="primary" htmlType="submit" block >
                         Add Platform
@@ -174,14 +174,14 @@ const PlatformList = (props) => {
                         style={{display: 'none'}}
                         name="key"
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Form.Item
                         label="Name"
                         name="name"
                         rules={[{required: true, message: 'Please the genre name'}]}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
                     <Button type='primary' htmlType="submit" block>
                         Update Platform
